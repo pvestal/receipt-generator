@@ -341,12 +341,35 @@ document.addEventListener('DOMContentLoaded', function() {
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     document.getElementById('receipt-date').value = now.toISOString().slice(0, 16);
     
+    // Initialize receipt counter
+    initializeCounter();
+    
     // Generate initial receipt
     generateReceipt();
     
     // Mobile menu functionality
     setupMobileMenu();
 });
+
+// Receipt counter functionality
+function initializeCounter() {
+    const savedCount = localStorage.getItem('receiptCount') || '0';
+    document.getElementById('receipt-count').textContent = savedCount;
+}
+
+function incrementCounter(count = 1) {
+    const currentCount = parseInt(localStorage.getItem('receiptCount') || '0');
+    const newCount = currentCount + count;
+    localStorage.setItem('receiptCount', newCount.toString());
+    document.getElementById('receipt-count').textContent = newCount;
+    
+    // Add a subtle animation
+    const counterElement = document.getElementById('receipt-count');
+    counterElement.style.transform = 'scale(1.2)';
+    setTimeout(() => {
+        counterElement.style.transform = 'scale(1)';
+    }, 200);
+}
 
 // Mobile menu setup
 function setupMobileMenu() {
@@ -496,6 +519,9 @@ function generateReceipt() {
     
     const receipt = document.getElementById('receipt');
     generateReceiptInDiv(receipt, store, itemCount, maxPrice, date);
+    
+    // Increment counter
+    incrementCounter();
     
     // Show toast notification
     const storeName = storeConfigs[store].name;
@@ -1084,6 +1110,9 @@ function generateMultipleReceipts() {
         newReceipt.className = 'receipt';
         wrapper.appendChild(newReceipt);
     }, 300);
+    
+    // Increment counter by 5
+    incrementCounter(5);
     
     // Show toast notification and scroll down
     showToast('5 random receipts generated! Scroll down to view all.', 'success');
