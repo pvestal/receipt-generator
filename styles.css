@@ -474,6 +474,12 @@ button:active {
     align-items: center;
 }
 
+/* Ensure each receipt is isolated */
+#receipt-wrapper .receipt {
+    position: relative;
+    isolation: isolate;
+}
+
 .receipt {
     background: #f8f8f6;
     background-image: 

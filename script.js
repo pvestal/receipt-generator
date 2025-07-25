@@ -1041,11 +1041,12 @@ function generateMultipleReceipts() {
     const currentMaxPrice = document.getElementById('max-price').value;
     
     // Generate 5 receipts with random stores
+    const receipts = [];
     for (let i = 0; i < 5; i++) {
         // Create a new receipt div for each
         const receiptDiv = document.createElement('div');
         receiptDiv.className = 'receipt';
-        wrapper.appendChild(receiptDiv);
+        receiptDiv.id = `receipt-${i}`; // Give each receipt a unique ID
         
         // Randomly select store and values
         const randomStore = stores[Math.floor(Math.random() * stores.length)];
@@ -1058,9 +1059,18 @@ function generateMultipleReceipts() {
         randomDate.setHours(Math.floor(Math.random() * 12) + 8);
         randomDate.setMinutes(Math.floor(Math.random() * 60));
         
-        // Generate receipt directly into this div
-        generateReceiptInDiv(receiptDiv, randomStore, randomItemCount, randomMaxPrice, randomDate);
+        // Store receipt info for later
+        receipts.push({ div: receiptDiv, store: randomStore, itemCount: randomItemCount, maxPrice: randomMaxPrice, date: randomDate });
     }
+    
+    // Generate each receipt
+    receipts.forEach((receipt, index) => {
+        wrapper.appendChild(receipt.div);
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+            generateReceiptInDiv(receipt.div, receipt.store, receipt.itemCount, receipt.maxPrice, receipt.date);
+        }, index * 50);
+    });
     
     // Restore original values
     document.getElementById('store-select').value = currentStore;
@@ -1068,10 +1078,12 @@ function generateMultipleReceipts() {
     document.getElementById('max-price').value = currentMaxPrice;
     
     // Create a new empty receipt div for future single generations
-    const newReceipt = document.createElement('div');
-    newReceipt.id = 'receipt';
-    newReceipt.className = 'receipt';
-    wrapper.appendChild(newReceipt);
+    setTimeout(() => {
+        const newReceipt = document.createElement('div');
+        newReceipt.id = 'receipt';
+        newReceipt.className = 'receipt';
+        wrapper.appendChild(newReceipt);
+    }, 300);
     
     // Show toast notification and scroll down
     showToast('5 random receipts generated! Scroll down to view all.', 'success');
@@ -1079,7 +1091,7 @@ function generateMultipleReceipts() {
     // Smooth scroll to show receipts
     setTimeout(() => {
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    }, 400);
 }
 
 function printReceipt() {
