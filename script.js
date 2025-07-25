@@ -4,7 +4,7 @@
 const storeConfigs = {
     walmart: {
         name: 'Walmart',
-        logo: 'WALMART',
+        logo: 'W A L M A R T',
         tagline: 'Save money. Live better.',
         address: ['3767 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', '(850) 934-0362'],
         storeNumber: '2533',
@@ -33,7 +33,7 @@ const storeConfigs = {
     },
     target: {
         name: 'Target',
-        logo: 'TARGET',
+        logo: 'T A R G E T',
         address: ['6255 N Davis Hwy', 'Pensacola, FL 32504', '(850) 478-0047'],
         storeNumber: 'T2847',
         items: [
@@ -118,7 +118,7 @@ const storeConfigs = {
     },
     publix: {
         name: 'Publix',
-        logo: 'Publix',
+        logo: 'P U B L I X',
         tagline: 'Where Shopping is a Pleasure',
         address: ['1010 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32561', 'Store #1546', '850-934-0179'],
         items: [
@@ -173,7 +173,7 @@ const storeConfigs = {
     },
     costco: {
         name: 'Costco',
-        logo: 'COSTCO WHOLESALE',
+        logo: 'C O S T C O',
         address: ['1100 Airport Blvd', 'Pensacola, FL 32504', 'Warehouse #1423', '850-474-3011'],
         storeNumber: '1423',
         items: [
@@ -201,7 +201,7 @@ const storeConfigs = {
     },
     costcogas: {
         name: 'Costco Gas',
-        logo: 'COSTCO GASOLINE',
+        logo: 'C O S T C O  GAS',
         address: ['1100 Airport Blvd', 'Pensacola, FL 32504', 'Station #1423'],
         storeNumber: 'GS1423',
         items: [
@@ -216,7 +216,7 @@ const storeConfigs = {
     },
     samsclub: {
         name: "Sam's Club",
-        logo: "SAM'S CLUB",
+        logo: "S A M ' S  C L U B",
         tagline: 'Members Mark',
         address: ['3546 S Blue Angel Pkwy', 'Pensacola, FL 32506', 'Club #6686', '850-453-6808'],
         storeNumber: '6686',
@@ -245,7 +245,7 @@ const storeConfigs = {
     },
     'winn-dixie': {
         name: 'Winn-Dixie',
-        logo: 'WINN ★ DIXIE',
+        logo: 'WINN-DIXIE',
         tagline: 'Down Home. Down the Street.',
         address: ['2969 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', 'Store #371', '850-932-4228'],
         storeNumber: '371',
@@ -274,7 +274,7 @@ const storeConfigs = {
     },
     'dollar-general': {
         name: 'Dollar General',
-        logo: '$ DOLLAR GENERAL',
+        logo: 'DOLLAR GENERAL',
         tagline: 'Save time. Save money.',
         address: ['3191 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', 'Store #17853', '850-677-8454'],
         storeNumber: '17853',
@@ -303,7 +303,7 @@ const storeConfigs = {
     },
     'circle-k': {
         name: 'Circle K',
-        logo: 'Circle K',
+        logo: 'CIRCLE K',
         tagline: 'Simply Great Coffee',
         address: ['3414 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', 'Store #2704388'],
         storeNumber: '2704388',
@@ -362,6 +362,37 @@ document.getElementById('randomize-5-btn').addEventListener('click', generateMul
 document.querySelector('.add-item-btn').addEventListener('click', addCustomItem);
 document.getElementById('clear-custom-btn').addEventListener('click', clearCustomItems);
 
+// Random store checkbox functionality
+document.getElementById('random-store').addEventListener('change', function() {
+    document.getElementById('store-select').disabled = this.checked;
+    if (this.checked) {
+        document.getElementById('store-select').style.opacity = '0.5';
+    } else {
+        document.getElementById('store-select').style.opacity = '1';
+    }
+});
+
+// Tab functionality
+window.showTab = function(tabName) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-button');
+    tabButtons.forEach(button => {
+        button.classList.remove('active');
+    });
+    
+    // Show selected tab
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+};
+
 function addCustomItem() {
     const nameInput = document.querySelector('.item-name-input');
     const priceInput = document.querySelector('.item-price-input');
@@ -399,7 +430,14 @@ function clearCustomItems() {
 }
 
 function generateReceipt() {
-    const store = document.getElementById('store-select').value;
+    let store = document.getElementById('store-select').value;
+    
+    // Check if random store is selected
+    if (document.getElementById('random-store').checked) {
+        const stores = Object.keys(storeConfigs);
+        store = stores[Math.floor(Math.random() * stores.length)];
+    }
+    
     const itemCount = parseInt(document.getElementById('item-count').value);
     const maxPrice = parseFloat(document.getElementById('max-price').value);
     const date = new Date(document.getElementById('receipt-date').value);
@@ -441,17 +479,49 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
         receipt.appendChild(memberDiv);
     }
     
-    // Date and transaction info
+    // Date and transaction info - store specific formatting
     const transInfo = document.createElement('div');
-    transInfo.style.marginTop = '5px';
+    transInfo.style.marginTop = '8px';
     transInfo.style.fontSize = '10px';
+    transInfo.style.lineHeight = '1.3';
     const registerNum = Math.floor(Math.random() * 20) + 1;
     const operatorId = Math.floor(Math.random() * 900) + 100;
-    transInfo.innerHTML = `
-        ${formatDate(date).toUpperCase()}<br>
-        REG ${registerNum.toString().padStart(2, '0')} #${operatorId} ${generateCashierName()}<br>
-        ${config.storeNumber ? `STR ${config.storeNumber}` : ''} TRN ${generateTransactionNumber()}
-    `;
+    const transNum = generateTransactionNumber();
+    
+    let transText = '';
+    if (store === 'walmart') {
+        transText = `
+            ST# ${config.storeNumber} OP# ${operatorId.toString().padStart(8, '0')} TE# ${registerNum.toString().padStart(2, '0')} TR# ${transNum.toString().padStart(5, '0')}<br>
+            ${formatDate(date)}
+        `;
+    } else if (store === 'target') {
+        transText = `
+            ${formatDate(date)}<br>
+            STORE: ${config.storeNumber.padStart(4, '0')} REG: ${registerNum.toString().padStart(3, '0')} TRAN: ${transNum}<br>
+            CASHIER: ${generateCashierName()}
+        `;
+    } else if (store === 'publix') {
+        transText = `
+            Store ${config.storeNumber} - ${formatDate(date)}<br>
+            Terminal ${registerNum} Trans ${transNum}<br>
+            Your cashier today was ${generateCashierName()}
+        `;
+    } else if (store === 'cvs' || store === 'walgreens') {
+        transText = `
+            ${formatDate(date).toUpperCase()}<br>
+            Store: ${config.storeNumber} Reg: ${registerNum} Trans: ${transNum}<br>
+            Cashier ID: ${operatorId}
+        `;
+    } else {
+        // Default format
+        transText = `
+            ${formatDate(date).toUpperCase()}<br>
+            REG ${registerNum.toString().padStart(2, '0')} #${operatorId} ${generateCashierName()}<br>
+            ${config.storeNumber ? `STR ${config.storeNumber}` : ''} TRN ${transNum}
+        `;
+    }
+    
+    transInfo.innerHTML = transText;
     receipt.appendChild(transInfo);
     
     // Divider
@@ -473,7 +543,7 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
         subtotal += item.price;
     });
     
-    // Add random items
+    // Add random items with realistic formatting
     if (config.isGasStation) {
         // For gas stations, show gallons and price per gallon
         const gallons = (Math.random() * 15 + 5).toFixed(3);
@@ -482,20 +552,39 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
         
         const gasDiv = document.createElement('div');
         gasDiv.style.marginBottom = '8px';
+        gasDiv.style.fontSize = '11px';
         gasDiv.innerHTML = `
+            <div>FUEL PURCHASE</div>
             <div>${selectedGas.name}</div>
             <div style="display: flex; justify-content: space-between;">
-                <span>${gallons} GAL @ $${selectedGas.price.toFixed(3)}/GAL</span>
+                <span>  ${gallons} GAL @ ${selectedGas.price.toFixed(3)}/GAL</span>
                 <span>$${totalPrice}</span>
             </div>
+            <div style="margin-top: 3px">PUMP #${Math.floor(Math.random() * 12) + 1}</div>
         `;
         itemsContainer.appendChild(gasDiv);
         subtotal = parseFloat(totalPrice);
     } else {
-        selectedItems.forEach(item => {
-            const itemDiv = createItemLine(item.name, item.price);
+        selectedItems.forEach((item, index) => {
+            const includeCode = store === 'walmart' || store === 'target' || store === 'costco';
+            const itemDiv = createItemLine(item.name, item.price, includeCode);
             itemsContainer.appendChild(itemDiv);
             subtotal += item.price;
+            
+            // Sometimes add discount lines for realism
+            if (Math.random() > 0.85 && item.price > 5) {
+                const discountAmount = (item.price * 0.1).toFixed(2);
+                const discountDiv = document.createElement('div');
+                discountDiv.className = 'receipt-item';
+                discountDiv.style.fontSize = '10px';
+                discountDiv.style.paddingLeft = '10px';
+                discountDiv.innerHTML = `
+                    <span class="item-name" style="font-style: italic">DISCOUNT</span>
+                    <span class="item-price" style="color: #d00">-${discountAmount}</span>
+                `;
+                itemsContainer.appendChild(discountDiv);
+                subtotal -= parseFloat(discountAmount);
+            }
         });
     }
     
@@ -508,45 +597,69 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     const tax = subtotal * config.taxRate;
     const total = subtotal + tax;
     
+    // Format totals with proper alignment
+    const subtotalStr = subtotal.toFixed(2).padStart(8, ' ');
+    const taxStr = tax.toFixed(2).padStart(8, ' ');
+    const totalStr = total.toFixed(2).padStart(8, ' ');
+    
     totalsDiv.innerHTML = `
         <div class="total-line">
             <span>SUBTOTAL</span>
-            <span>$${subtotal.toFixed(2)}</span>
+            <span>${subtotalStr}</span>
         </div>
         <div class="total-line">
-            <span>TAX</span>
-            <span>$${tax.toFixed(2)}</span>
+            <span>TAX ${(config.taxRate * 100).toFixed(1)}%</span>
+            <span>${taxStr}</span>
         </div>
         <div class="total-line grand-total">
             <span>TOTAL</span>
-            <span>$${total.toFixed(2)}</span>
+            <span>${totalStr}</span>
         </div>
     `;
     
     receipt.appendChild(totalsDiv);
     
-    // Savings info
-    if (config.savingsMessage) {
-        const savings = (subtotal * 0.1).toFixed(2); // Random 10% savings
+    // Savings info with more realistic calculation
+    if (config.savingsMessage && subtotal > 20) {
+        const savingsPercent = Math.random() * 0.15 + 0.05; // 5-20% savings
+        const savings = (subtotal * savingsPercent).toFixed(2);
         const savingsDiv = document.createElement('div');
         savingsDiv.className = 'savings-info';
-        savingsDiv.innerHTML = `${config.savingsMessage}: $${savings}`;
+        savingsDiv.innerHTML = `*** ${config.savingsMessage}: $${savings} ***`;
         receipt.appendChild(savingsDiv);
     }
     
-    // Payment info
+    // Payment info - more realistic formatting
     const paymentDiv = document.createElement('div');
     paymentDiv.style.marginTop = '10px';
+    paymentDiv.style.fontSize = '10px';
+    const paymentMethods = ['VISA', 'MASTERCARD', 'AMEX', 'DISCOVER'];
+    const selectedPayment = paymentMethods[Math.floor(Math.random() * paymentMethods.length)];
     const lastFour = Math.floor(Math.random() * 9000) + 1000;
-    const expMonth = Math.floor(Math.random() * 12) + 1;
-    const expYear = Math.floor(Math.random() * 5) + 25; // 2025-2029
+    const authCode = generateAuthCode();
     
-    paymentDiv.innerHTML = `
-        <div style="margin-bottom: 5px">AMEX ***********${lastFour}</div>
-        <div>EXP ${expMonth.toString().padStart(2, '0')}/${expYear}</div>
-        <div>APPROVED</div>
-        <div>Auth Code: ${generateAuthCode()}</div>
-    `;
+    // Store-specific payment formatting
+    if (store === 'walmart' || store === 'target') {
+        paymentDiv.innerHTML = `
+            <div>CARD TYPE: ${selectedPayment}</div>
+            <div>ACCOUNT: ***********${lastFour}</div>
+            <div>APPROVAL: ${authCode}</div>
+            <div>AMOUNT: $${total.toFixed(2)}</div>
+        `;
+    } else if (store === 'costco' || store === 'samsclub') {
+        paymentDiv.innerHTML = `
+            <div>${selectedPayment} ENDING IN ${lastFour}</div>
+            <div>AUTH CODE: ${authCode}</div>
+            <div>TOTAL AMOUNT: $${total.toFixed(2)}</div>
+            <div>PAYMENT APPROVED</div>
+        `;
+    } else {
+        paymentDiv.innerHTML = `
+            <div>${selectedPayment} ***${lastFour}</div>
+            <div>APPROVED ${authCode}</div>
+            <div>AMOUNT: $${total.toFixed(2)}</div>
+        `;
+    }
     receipt.appendChild(paymentDiv);
     
     // Footer
@@ -558,34 +671,110 @@ function generateHeader(config, store) {
     const header = document.createElement('div');
     header.className = 'store-header';
     
+    // Store-specific logo formatting
     const logo = document.createElement('div');
     logo.className = 'store-logo';
-    logo.textContent = config.logo;
+    
+    if (store === 'walmart') {
+        // Walmart - styled like actual receipts
+        logo.innerHTML = `<div class="walmart-header">
+                            <div class="walmart-name">Walmart</div>
+                            <div class="walmart-tagline">Save money. Live better.</div>
+                         </div>`;
+        logo.classList.add('walmart-logo');
+    } else if (store === 'target') {
+        // Target - bold red logo
+        logo.innerHTML = `<div class="target-header">
+                            <div class="target-name">TARGET</div>
+                         </div>`;
+        logo.classList.add('target-logo');
+    } else if (store === 'cvs') {
+        // CVS with pharmacy style
+        logo.innerHTML = `<div class="cvs-header">
+                            <div class="cvs-name">CVS</div>
+                         </div>`;
+        logo.classList.add('cvs-logo');
+    } else if (store === 'walgreens') {
+        // Walgreens red logo
+        logo.innerHTML = `<div class="walgreens-header">
+                            <div class="walgreens-name">Walgreens</div>
+                         </div>`;
+        logo.classList.add('walgreens-logo');
+    } else if (store === 'publix') {
+        // Publix green logo
+        logo.innerHTML = `<div class="publix-header">
+                            <div class="publix-name">PUBLIX</div>
+                         </div>`;
+        logo.classList.add('publix-logo');
+    } else if (store === 'homedepot') {
+        // Home Depot orange
+        logo.innerHTML = `<div class="homedepot-header">
+                            <div class="homedepot-name">THE HOME DEPOT</div>
+                         </div>`;
+        logo.classList.add('homedepot-logo');
+    } else if (store === 'costco') {
+        logo.innerHTML = `<div class="costco-header">
+                            <div class="costco-name">COSTCO</div>
+                         </div>`;
+        logo.classList.add('costco-logo');
+    } else if (store === 'costcogas') {
+        logo.innerHTML = `<div class="costco-header">
+                            <div class="costco-name">COSTCO GAS</div>
+                         </div>`;
+        logo.classList.add('costco-logo');
+    } else if (store === 'samsclub') {
+        // Sam's Club
+        logo.innerHTML = `<div class="sams-header">
+                            <div class="sams-name">SAM'S CLUB</div>
+                         </div>`;
+        logo.classList.add('samsclub-logo');
+    } else if (store === 'winn-dixie') {
+        // Winn-Dixie
+        logo.innerHTML = `<div class="winndixie-header">
+                            <div class="winndixie-name">WINN-DIXIE</div>
+                         </div>`;
+        logo.classList.add('winndixie-logo');
+    } else if (store === 'dollar-general') {
+        // Dollar General
+        logo.innerHTML = `<div class="dg-header">
+                            <div class="dg-name">DOLLAR GENERAL</div>
+                         </div>`;
+        logo.classList.add('dg-logo');
+    } else if (store === 'circle-k') {
+        // Circle K
+        logo.innerHTML = `<div class="circlek-header">
+                            <div class="circlek-name">Circle K</div>
+                         </div>`;
+        logo.classList.add('circlek-logo');
+    }
+    
     header.appendChild(logo);
     
-    if (config.tagline) {
+    if (config.tagline && store !== 'cvs') {
         const tagline = document.createElement('div');
         tagline.className = 'store-tagline';
         tagline.textContent = config.tagline;
         header.appendChild(tagline);
     }
     
-    if (config.sublogo) {
-        const sublogo = document.createElement('div');
-        sublogo.className = config.sublogo;
-        sublogo.textContent = config.sublogo.toUpperCase();
-        header.appendChild(sublogo);
-    }
-    
     return header;
 }
 
-function createItemLine(name, price) {
+function createItemLine(name, price, includeCode = false) {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'receipt-item';
+    
+    // Sometimes add item codes for realism
+    const itemCode = includeCode && Math.random() > 0.5 ? 
+        `${Math.floor(Math.random() * 900000) + 100000} ` : '';
+    
+    // Format price with proper alignment
+    const priceStr = price.toFixed(2);
+    const paddedPrice = priceStr.padStart(7, ' ');
+    
     itemDiv.innerHTML = `
-        <span class="item-name">${name}</span>
-        <span class="item-price">$${price.toFixed(2)}</span>
+        <span class="item-name">${itemCode}${name}</span>
+        <span class="item-price">${paddedPrice}</span>
     `;
     return itemDiv;
 }
@@ -665,17 +854,22 @@ function generateFooter(store) {
 }
 
 function formatDate(date) {
-    const dateStr = date.toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: '2-digit'
-    });
-    const timeStr = date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    });
-    return `${dateStr} ${timeStr}`;
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear().toString().substr(-2);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    
+    // Different stores use different date formats
+    const random = Math.random();
+    if (random < 0.3) {
+        return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
+    } else if (random < 0.6) {
+        return `${month}/${day}/${year} ${hours}:${minutes}`;
+    } else {
+        return `${month}-${day}-${year} ${hours}:${minutes}`;
+    }
 }
 
 function generateTransactionNumber() {
@@ -683,8 +877,11 @@ function generateTransactionNumber() {
 }
 
 function generateCashierName() {
-    const names = ['SARAH M', 'JOHN D', 'MARIA R', 'JAMES K', 'LISA P', 'DAVID W'];
-    return names[Math.floor(Math.random() * names.length)];
+    const firstNames = ['SARAH', 'JOHN', 'MARIA', 'JAMES', 'LISA', 'DAVID', 'JENNIFER', 'MICHAEL', 'SUSAN', 'ROBERT', 'KAREN', 'WILLIAM'];
+    const lastInitials = ['M', 'D', 'R', 'K', 'P', 'W', 'T', 'S', 'B', 'C', 'A', 'L'];
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastInitial = lastInitials[Math.floor(Math.random() * lastInitials.length)];
+    return `${firstName} ${lastInitial}.`;
 }
 
 function generateAuthCode() {
@@ -697,41 +894,55 @@ function generateMemberId(prefix) {
 }
 
 function generateBarcodeData(store) {
-    // Generate store-specific barcode patterns
-    const storePrefixes = {
-        walmart: '007874',
-        target: '490',
-        cvs: '305',
-        walgreens: '311',
-        publix: '041',
-        homedepot: '693',
-        costco: '096619',
-        costcogas: '096619',
-        samsclub: '078742',
-        'winn-dixie': '021130',
-        'dollar-general': '049000',
-        'circle-k': '704273'
-    };
+    // Match actual store barcode patterns
+    const date = new Date();
+    const storeNum = storeConfigs[store].storeNumber || '0000';
+    const trans = Math.floor(Math.random() * 9999) + 1;
     
-    const prefix = storePrefixes[store] || '100';
-    const randomDigits = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-    
-    // For UPC-A format (12 digits total)
-    const barcodeWithoutCheck = prefix + randomDigits;
-    
-    // Calculate check digit for UPC-A
-    let sum = 0;
-    for (let i = 0; i < barcodeWithoutCheck.length; i++) {
-        const digit = parseInt(barcodeWithoutCheck[i]);
-        if (i % 2 === 0) {
-            sum += digit * 3;
-        } else {
-            sum += digit;
-        }
+    if (store === 'walmart') {
+        // Walmart: ST# + REG# + TRANS# + DATE (matches actual)
+        const reg = Math.floor(Math.random() * 30) + 1;
+        return `${storeNum} ${reg.toString().padStart(2, '0')} ${trans.toString().padStart(4, '0')} ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    } else if (store === 'target') {
+        // Target: DPCI style barcode
+        const dpci = `${Math.floor(Math.random() * 999).toString().padStart(3, '0')}-${Math.floor(Math.random() * 99).toString().padStart(2, '0')}-${Math.floor(Math.random() * 9999).toString().padStart(4, '0')}`;
+        return dpci;
+    } else if (store === 'cvs') {
+        // CVS: Store# + Date + Transaction
+        return `${storeNum} ${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')} ${trans.toString().padStart(4, '0')}`;
+    } else if (store === 'walgreens') {
+        // Walgreens: Similar to CVS
+        return `WAG ${storeNum} ${trans.toString().padStart(5, '0')}`;
+    } else if (store === 'publix') {
+        // Publix: Store-Register-Trans-Date
+        const reg = Math.floor(Math.random() * 15) + 1;
+        return `${storeNum}-${reg.toString().padStart(2, '0')}-${trans.toString().padStart(4, '0')}-${date.getMonth() + 1}${date.getDate()}`;
+    } else if (store === 'homedepot') {
+        // Home Depot: Store + Register + Trans + Date/Time
+        const reg = Math.floor(Math.random() * 20) + 1;
+        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(5, '0')} ${date.getHours()}${date.getMinutes()}`;
+    } else if (store === 'costco' || store === 'costcogas') {
+        // Costco: Warehouse# + Register + Transaction
+        const reg = Math.floor(Math.random() * 50) + 1;
+        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(6, '0')}`;
+    } else if (store === 'samsclub') {
+        // Sam's: Club# + Transaction + Date
+        return `${storeNum} ${trans.toString().padStart(6, '0')} ${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate()}`;
+    } else if (store === 'winn-dixie') {
+        // Winn-Dixie: Store-Register-Trans
+        const reg = Math.floor(Math.random() * 12) + 1;
+        return `${storeNum}-${reg}-${trans.toString().padStart(4, '0')}`;
+    } else if (store === 'dollar-general') {
+        // Dollar General: Store + Trans + Time
+        return `${storeNum} ${trans.toString().padStart(4, '0')} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+    } else if (store === 'circle-k') {
+        // Circle K: Store# + Shift + Trans
+        const shift = Math.floor(Math.random() * 3) + 1;
+        return `${storeNum} S${shift} ${trans.toString().padStart(5, '0')}`;
+    } else {
+        // Default format
+        return `${storeNum} ${trans.toString().padStart(6, '0')}`;
     }
-    const checkDigit = (10 - (sum % 10)) % 10;
-    
-    return barcodeWithoutCheck + checkDigit;
 }
 
 function generateQRPattern() {
