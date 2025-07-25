@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Libre+Barcode+39&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="toast-container"></div>
+    <div class="container">
+        <div class="controls-panel">
+            <h1>Receipt Generator</h1>
+            
+            <div class="control-group">
+                <label for="store-select">Store:</label>
+                <select id="store-select">
+                    <option value="walmart">Walmart</option>
+                    <option value="target">Target</option>
+                    <option value="cvs">CVS Pharmacy</option>
+                    <option value="walgreens">Walgreens</option>
+                    <option value="publix">Publix</option>
+                    <option value="homedepot">The Home Depot</option>
+                    <option value="costco">Costco</option>
+                    <option value="costcogas">Costco Gas</option>
+                    <option value="samsclub">Sam's Club</option>
+                    <option value="winn-dixie">Winn-Dixie</option>
+                    <option value="dollar-general">Dollar General</option>
+                    <option value="7eleven">7-Eleven</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="item-count">Number of Items:</label>
+                <input type="range" id="item-count" min="1" max="20" value="5">
+                <span id="item-count-display">5</span>
+            </div>
+            
+            <div class="control-group">
+                <label for="max-price">Max Item Price:</label>
+                <input type="range" id="max-price" min="5" max="200" value="50">
+                <span>$<span id="max-price-display">50</span></span>
+            </div>
+            
+            <div class="control-group">
+                <label for="receipt-date">Date:</label>
+                <input type="datetime-local" id="receipt-date">
+            </div>
+            
+            <div class="button-group">
+                <button id="generate-btn" class="primary-btn">Generate Receipt</button>
+                <button id="randomize-5-btn" class="secondary-btn">Randomize x5</button>
+            </div>
+            <button id="print-btn" class="print-btn">Print Receipt</button>
+            
+            <h3>Custom Items</h3>
+            <div id="custom-items">
+                <div class="custom-item-input">
+                    <input type="text" placeholder="Item name" class="item-name-input">
+                    <input type="number" placeholder="Price" class="item-price-input" step="0.01">
+                    <button class="add-item-btn">Add</button>
+                </div>
+            </div>
+            <div id="custom-items-list"></div>
+            <button id="clear-custom-btn">Clear Custom Items</button>
+        </div>
+        
+        <div class="receipt-container">
+            <div id="receipt-wrapper">
+                <div id="receipt" class="receipt"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
