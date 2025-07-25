@@ -1,5 +1,9 @@
 // Store logos removed - will use text-only headers
 
+// Version info
+const APP_VERSION = '2.0.0';
+const VERSION_DATE = '2025-01-24';
+
 // Store configurations
 const storeConfigs = {
     walmart: {
@@ -528,6 +532,12 @@ let globalExpDate = null; // Store consistent expiration date
 
 // Initialize date input with current date/time
 document.addEventListener('DOMContentLoaded', function() {
+    // Display version
+    const versionElement = document.getElementById('app-version');
+    if (versionElement) {
+        versionElement.textContent = `v${APP_VERSION}`;
+    }
+    
     const now = new Date();
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     document.getElementById('receipt-date').value = now.toISOString().slice(0, 16);
