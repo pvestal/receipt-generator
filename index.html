@@ -40,8 +40,11 @@
                 <div class="control-group">
                     <label for="store-select">Store:</label>
                     <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-                        <input type="checkbox" id="random-store" style="width: auto;">
-                        <label for="random-store" style="margin: 0; font-weight: normal;">Random</label>
+                        <label class="toggle-switch small-toggle">
+                            <input type="checkbox" id="random-store">
+                            <span class="slider"></span>
+                        </label>
+                        <span style="margin: 0; font-weight: normal;">Random Store</span>
                     </div>
                     <select id="store-select" style="margin-top: 10px;">
                         <option value="walmart">Walmart</option>
@@ -72,8 +75,12 @@
                 </div>
                 
                 <div class="control-group">
-                    <label>
-                        <input type="checkbox" id="monochrome-mode"> Monochrome Receipt
+                    <label class="toggle-label">
+                        <span>Colorful Mode</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="color-mode" checked>
+                            <span class="slider"></span>
+                        </label>
                     </label>
                 </div>
                 

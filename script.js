@@ -723,8 +723,8 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     const config = storeConfigs[store];
     
     // Clear receipt and set store class
-    const isMonochrome = document.getElementById('monochrome-mode').checked;
-    receipt.className = `receipt ${store}${isMonochrome ? ' monochrome' : ''}`;
+    const isColorMode = document.getElementById('color-mode').checked;
+    receipt.className = `receipt ${store}${!isColorMode ? ' monochrome' : ''}`;
     receipt.innerHTML = '';
     
     // Generate header
@@ -951,6 +951,30 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     receipt.appendChild(footer);
 }
 
+function getLogoText(store, isColorMode) {
+    const logos = {
+        'walmart': isColorMode ? '★ ★ ★  WALMART  ★ ★ ★' : 'WALMART',
+        'target': isColorMode ? '◎  T A R G E T  ◎' : 'TARGET',
+        'cvs': isColorMode ? '♥ CVS/pharmacy ♥' : 'CVS/pharmacy',
+        'walgreens': isColorMode ? '═ W A L G R E E N S ═' : 'WALGREENS',
+        'publix': isColorMode ? '▪▪▪ P U B L I X ▪▪▪' : 'PUBLIX',
+        'homedepot': isColorMode ? '⌂ THE HOME DEPOT ⌂' : 'THE HOME DEPOT',
+        'costco': isColorMode ? '▓▓ COSTCO WHOLESALE ▓▓' : 'COSTCO WHOLESALE',
+        'costcogas': isColorMode ? '⛽ COSTCO GASOLINE ⛽' : 'COSTCO GASOLINE',
+        'samsclub': isColorMode ? '■ SAM\'S CLUB ■' : 'SAM\'S CLUB',
+        'winn-dixie': isColorMode ? '◆ WINN-DIXIE ◆' : 'WINN-DIXIE',
+        'dollar-general': isColorMode ? '$ DOLLAR GENERAL $' : 'DOLLAR GENERAL',
+        'circle-k': isColorMode ? '⊗ Circle K ⊗' : 'Circle K',
+        'sevenelevn': isColorMode ? '▌7-ELEVEN▐' : '7-ELEVEN',
+        'aldi': isColorMode ? '▬ A L D I ▬' : 'ALDI',
+        'wholefoods': isColorMode ? '● WHOLE FOODS ●' : 'WHOLE FOODS MARKET',
+        'traderjoes': isColorMode ? '⊕ TRADER JOE\'S ⊕' : 'TRADER JOE\'S',
+        'kroger': isColorMode ? '◈ KROGER ◈' : 'KROGER',
+        'riteaid': isColorMode ? '✚ RITE AID ✚' : 'RITE AID'
+    };
+    return logos[store] || config.logo;
+}
+
 function generateHeader(config, store) {
     const header = document.createElement('div');
     header.className = 'store-header';
@@ -959,114 +983,25 @@ function generateHeader(config, store) {
     const logo = document.createElement('div');
     logo.className = 'store-logo';
     
-    if (store === 'walmart') {
-        // Walmart with star logo
-        logo.innerHTML = `<div class="walmart-header">
-                            <pre class="ascii-logo">★ ★ ★  WALMART  ★ ★ ★</pre>
-                            <div class="walmart-tagline">Save money. Live better.</div>
-                         </div>`;
-        logo.classList.add('walmart-logo');
-    } else if (store === 'target') {
-        // Target with bullseye
-        logo.innerHTML = `<div class="target-header">
-                            <pre class="ascii-logo">◎  T A R G E T  ◎</pre>
-                         </div>`;
-        logo.classList.add('target-logo');
-    } else if (store === 'cvs') {
-        // CVS with heart
-        logo.innerHTML = `<div class="cvs-header">
-                            <pre class="ascii-logo">♥ CVS/pharmacy ♥</pre>
-                         </div>`;
-        logo.classList.add('cvs-logo');
-    } else if (store === 'walgreens') {
-        // Walgreens with W
-        logo.innerHTML = `<div class="walgreens-header">
-                            <pre class="ascii-logo">═ W A L G R E E N S ═</pre>
-                         </div>`;
-        logo.classList.add('walgreens-logo');
-    } else if (store === 'publix') {
-        // Publix
-        logo.innerHTML = `<div class="publix-header">
-                            <pre class="ascii-logo">▪▪▪ P U B L I X ▪▪▪</pre>
-                         </div>`;
-        logo.classList.add('publix-logo');
-    } else if (store === 'homedepot') {
-        // Home Depot with house
-        logo.innerHTML = `<div class="homedepot-header">
-                            <pre class="ascii-logo">⌂ THE HOME DEPOT ⌂</pre>
-                         </div>`;
-        logo.classList.add('homedepot-logo');
-    } else if (store === 'costco') {
-        logo.innerHTML = `<div class="costco-header">
-                            <pre class="ascii-logo">▓▓ COSTCO WHOLESALE ▓▓</pre>
-                         </div>`;
-        logo.classList.add('costco-logo');
-    } else if (store === 'costcogas') {
-        logo.innerHTML = `<div class="costco-header">
-                            <pre class="ascii-logo">⛽ COSTCO GASOLINE ⛽</pre>
-                         </div>`;
-        logo.classList.add('costco-logo');
-    } else if (store === 'samsclub') {
-        // Sam's Club
-        logo.innerHTML = `<div class="sams-header">
-                            <pre class="ascii-logo">■ SAM'S CLUB ■</pre>
-                         </div>`;
-        logo.classList.add('samsclub-logo');
-    } else if (store === 'winn-dixie') {
-        // Winn-Dixie
-        logo.innerHTML = `<div class="winndixie-header">
-                            <pre class="ascii-logo">◆ WINN-DIXIE ◆</pre>
-                         </div>`;
-        logo.classList.add('winndixie-logo');
-    } else if (store === 'dollar-general') {
-        // Dollar General
-        logo.innerHTML = `<div class="dg-header">
-                            <pre class="ascii-logo">$ DOLLAR GENERAL $</pre>
-                         </div>`;
-        logo.classList.add('dg-logo');
-    } else if (store === 'circle-k') {
-        // Circle K
-        logo.innerHTML = `<div class="circlek-header">
-                            <pre class="ascii-logo">⊗ Circle K ⊗</pre>
-                         </div>`;
-        logo.classList.add('circlek-logo');
-    } else if (store === 'sevenelevn') {
-        // 7-Eleven
-        logo.innerHTML = `<div class="seveneleven-header">
-                            <pre class="ascii-logo">▌7-ELEVEN▐</pre>
-                         </div>`;
-        logo.classList.add('seveneleven-logo');
-    } else if (store === 'aldi') {
-        // ALDI
-        logo.innerHTML = `<div class="aldi-header">
-                            <pre class="ascii-logo">▬ A L D I ▬</pre>
-                         </div>`;
-        logo.classList.add('aldi-logo');
-    } else if (store === 'wholefoods') {
-        // Whole Foods
-        logo.innerHTML = `<div class="wholefoods-header">
-                            <pre class="ascii-logo">● WHOLE FOODS ●</pre>
-                         </div>`;
-        logo.classList.add('wholefoods-logo');
-    } else if (store === 'traderjoes') {
-        // Trader Joe's
-        logo.innerHTML = `<div class="traderjoes-header">
-                            <pre class="ascii-logo">⊕ TRADER JOE'S ⊕</pre>
-                         </div>`;
-        logo.classList.add('traderjoes-logo');
-    } else if (store === 'kroger') {
-        // Kroger
-        logo.innerHTML = `<div class="kroger-header">
-                            <pre class="ascii-logo">◈ KROGER ◈</pre>
-                         </div>`;
-        logo.classList.add('kroger-logo');
-    } else if (store === 'riteaid') {
-        // Rite Aid
-        logo.innerHTML = `<div class="riteaid-header">
-                            <pre class="ascii-logo">✚ RITE AID ✚</pre>
-                         </div>`;
-        logo.classList.add('riteaid-logo');
-    }
+    const isColorMode = document.getElementById('color-mode').checked;
+    const logoText = getLogoText(store, isColorMode);
+    
+    // Simplified logo generation using logoText
+    const headerClass = store === 'winn-dixie' ? 'winndixie' : 
+                       store === 'dollar-general' ? 'dg' : 
+                       store === 'sevenelevn' ? 'seveneleven' : 
+                       store === 'circle-k' ? 'circlek' : 
+                       store === 'wholefoods' ? 'wholefoods' : 
+                       store === 'traderjoes' ? 'traderjoes' : 
+                       store === 'riteaid' ? 'riteaid' : 
+                       store === 'costcogas' ? 'costco' : 
+                       store === 'samsclub' ? 'sams' : store;
+                       
+    logo.innerHTML = `<div class="${headerClass}-header">
+                        <pre class="ascii-logo">${logoText}</pre>
+                        ${store === 'walmart' && isColorMode ? '<div class="walmart-tagline">Save money. Live better.</div>' : ''}
+                     </div>`;
+    logo.classList.add(`${headerClass}-logo`);
     
     header.appendChild(logo);
     
