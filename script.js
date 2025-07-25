@@ -1243,13 +1243,14 @@ function generateMultipleReceipts() {
     wrapper.innerHTML = ''; // Clear existing receipts
     
     const stores = Object.keys(storeConfigs);
+    const isRandomStore = document.getElementById('random-store').checked;
     
     // Save current values
     const currentStore = document.getElementById('store-select').value;
     const currentItemCount = document.getElementById('item-count').value;
     const currentMaxPrice = document.getElementById('max-price').value;
     
-    // Generate 5 receipts with random stores
+    // Generate 5 receipts
     const receipts = [];
     for (let i = 0; i < 5; i++) {
         // Create a new receipt div for each
@@ -1257,8 +1258,10 @@ function generateMultipleReceipts() {
         receiptDiv.className = 'receipt';
         receiptDiv.id = `receipt-${i}`; // Give each receipt a unique ID
         
-        // Randomly select store and values
-        const randomStore = stores[Math.floor(Math.random() * stores.length)];
+        // Select store based on random toggle
+        const selectedStore = isRandomStore ? 
+            stores[Math.floor(Math.random() * stores.length)] : 
+            currentStore;
         const randomItemCount = Math.floor(Math.random() * 15) + 3;
         const randomMaxPrice = Math.floor(Math.random() * 100) + 10;
         
@@ -1269,7 +1272,7 @@ function generateMultipleReceipts() {
         randomDate.setMinutes(Math.floor(Math.random() * 60));
         
         // Store receipt info for later
-        receipts.push({ div: receiptDiv, store: randomStore, itemCount: randomItemCount, maxPrice: randomMaxPrice, date: randomDate });
+        receipts.push({ div: receiptDiv, store: selectedStore, itemCount: randomItemCount, maxPrice: randomMaxPrice, date: randomDate });
     }
     
     // Generate each receipt
