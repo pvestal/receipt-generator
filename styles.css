@@ -217,8 +217,15 @@ body {
 }
 
 .controls-panel h1 {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     color: #2c3e50;
+}
+
+.app-version {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
 }
 
 /* Tab styles */
