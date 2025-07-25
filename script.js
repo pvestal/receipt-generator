@@ -343,7 +343,55 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Generate initial receipt
     generateReceipt();
+    
+    // Mobile menu functionality
+    setupMobileMenu();
 });
+
+// Mobile menu setup
+function setupMobileMenu() {
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const closePanel = document.querySelector('.close-panel');
+    const controlsPanel = document.querySelector('.controls-panel');
+    const mobileOverlay = document.querySelector('.mobile-overlay');
+    
+    // Open panel
+    mobileToggle.addEventListener('click', function() {
+        controlsPanel.classList.remove('closed');
+        mobileOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent body scroll when menu is open
+    });
+    
+    // Close panel function
+    function closeControlPanel() {
+        controlsPanel.classList.add('closed');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore body scroll
+    }
+    
+    // Close panel button
+    closePanel.addEventListener('click', closeControlPanel);
+    
+    // Close panel when clicking overlay
+    mobileOverlay.addEventListener('click', closeControlPanel);
+    
+    // Initialize panel as closed on mobile
+    if (window.innerWidth <= 768) {
+        controlsPanel.classList.add('closed');
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            controlsPanel.classList.remove('closed');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        } else if (controlsPanel.classList.contains('closed') === false) {
+            // If panel is open on resize to mobile, keep overlay active
+            mobileOverlay.classList.add('active');
+        }
+    });
+}
 
 // Event listeners
 document.getElementById('item-count').addEventListener('input', function() {

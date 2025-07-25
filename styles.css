@@ -95,11 +95,106 @@ body {
     z-index: 100;
 }
 
+/* Mobile toggle button */
+.mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    width: 40px;
+    height: 40px;
+    background: #495057;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: white;
+    margin: 5px auto;
+    transition: all 0.3s;
+}
+
+.mobile-toggle:hover {
+    background: #343a40;
+}
+
+/* Close button for panel */
+.close-panel {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+}
+
+.close-panel:hover {
+    background: #f8f9fa;
+    color: #333;
+}
+
 @media (max-width: 1400px) {
     .controls-panel {
         left: 0;
-        transform: none;
+        transform: translateX(0);
         margin-left: 0;
+        transition: transform 0.3s ease;
+    }
+    
+    .controls-panel.closed {
+        transform: translateX(-100%);
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-toggle {
+        display: block;
+    }
+    
+    .close-panel {
+        display: block;
+    }
+    
+    .controls-panel {
+        width: 85%;
+        max-width: 350px;
+        z-index: 999;
+    }
+    
+    .receipt-container {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    /* Overlay for mobile */
+    .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 998;
+    }
+    
+    .mobile-overlay.active {
+        display: block;
     }
 }
 
@@ -331,6 +426,17 @@ button:active {
     padding: 40px;
     overflow-y: auto;
     margin-left: 350px; /* Account for fixed controls panel */
+}
+
+@media (max-width: 1400px) {
+    .receipt-container {
+        margin-left: 350px;
+    }
+    
+    body:has(.controls-panel.closed) .receipt-container {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
 }
 
 #receipt-wrapper {
