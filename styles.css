@@ -228,38 +228,45 @@ body {
     background: #555;
 }
 
-.controls-panel h1 {
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 20px;
     margin-bottom: 5px;
+}
+
+@media (max-width: 1400px) {
+    .header-row {
+        margin-top: 45px;
+    }
+}
+
+.controls-panel h1 {
+    margin: 0;
     color: #2c3e50;
 }
 
 .app-version {
     font-size: 11px;
     color: #999;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     letter-spacing: 0.5px;
 }
 
 .receipt-counter {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 20px;
-    padding: 8px 12px;
-    background: #f8f9fa;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 0.5px;
 }
 
 .counter-label {
-    color: #888;
+    color: #999;
 }
 
 .counter-value {
-    font-weight: bold;
-    color: #495057;
-    font-size: 14px;
+    color: #999;
+    font-weight: normal;
     transition: transform 0.2s ease;
     display: inline-block;
 }
