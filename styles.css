@@ -596,6 +596,13 @@ button:active {
     white-space: pre;
 }
 
+/* Monochrome mode */
+.receipt.monochrome * {
+    color: #000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
 /* Store logos - Receipt style */
 
 /* Walmart */
@@ -605,8 +612,9 @@ button:active {
 }
 
 .walmart-header .ascii-logo {
-    color: #1a1a1a;
+    color: #0071ce;
     font-size: 13px;
+    font-weight: bold;
 }
 
 .walmart-tagline {
@@ -625,8 +633,9 @@ button:active {
 }
 
 .target-header .ascii-logo {
-    color: #1a1a1a;
+    color: #cc0000;
     font-size: 14px;
+    font-weight: bold;
 }
 
 /* CVS */
@@ -636,8 +645,9 @@ button:active {
 }
 
 .cvs-header .ascii-logo {
-    color: #1a1a1a;
+    color: #cc0000;
     font-size: 13px;
+    font-weight: bold;
 }
 
 /* Walgreens */
@@ -647,8 +657,9 @@ button:active {
 }
 
 .walgreens-header .ascii-logo {
-    color: #1a1a1a;
+    color: #e31837;
     font-size: 13px;
+    font-weight: bold;
 }
 
 /* Publix */
@@ -658,8 +669,9 @@ button:active {
 }
 
 .publix-header .ascii-logo {
-    color: #1a1a1a;
+    color: #65a637;
     font-size: 13px;
+    font-weight: bold;
 }
 
 /* Home Depot */
@@ -669,8 +681,9 @@ button:active {
 }
 
 .homedepot-header .ascii-logo {
-    color: #1a1a1a;
+    color: #f96302;
     font-size: 12px;
+    font-weight: bold;
 }
 
 /* Costco */
@@ -680,8 +693,9 @@ button:active {
 }
 
 .costco-header .ascii-logo {
-    color: #1a1a1a;
+    color: #0052cc;
     font-size: 12px;
+    font-weight: bold;
 }
 
 /* Sam's Club */
@@ -691,8 +705,9 @@ button:active {
 }
 
 .sams-header .ascii-logo {
-    color: #1a1a1a;
+    color: #0071ce;
     font-size: 13px;
+    font-weight: bold;
 }
 
 /* Winn-Dixie */
@@ -702,8 +717,9 @@ button:active {
 }
 
 .winndixie-header .ascii-logo {
-    color: #1a1a1a;
+    color: #e41e3a;
     font-size: 13px;
+    font-weight: bold;
 }
 
 /* Dollar General */
@@ -713,8 +729,11 @@ button:active {
 }
 
 .dg-header .ascii-logo {
-    color: #1a1a1a;
+    color: #ffc500;
     font-size: 13px;
+    font-weight: bold;
+    background: #000;
+    padding: 2px 5px;
 }
 
 /* Circle K */
@@ -724,8 +743,83 @@ button:active {
 }
 
 .circlek-header .ascii-logo {
-    color: #1a1a1a;
+    color: #ec1c24;
     font-size: 13px;
+    font-weight: bold;
+}
+
+/* 7-Eleven */
+.seveneleven-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.seveneleven-header .ascii-logo {
+    color: #00A758;
+    font-size: 13px;
+    font-weight: bold;
+    background: #E30C19;
+    padding: 2px 5px;
+}
+
+/* ALDI */
+.aldi-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.aldi-header .ascii-logo {
+    color: #001f8f;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Whole Foods */
+.wholefoods-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.wholefoods-header .ascii-logo {
+    color: #00674b;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Trader Joe's */
+.traderjoes-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.traderjoes-header .ascii-logo {
+    color: #d31245;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Kroger */
+.kroger-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.kroger-header .ascii-logo {
+    color: #0059a8;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Rite Aid */
+.riteaid-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.riteaid-header .ascii-logo {
+    color: #0057a6;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 .store-tagline {

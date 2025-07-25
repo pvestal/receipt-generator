@@ -523,6 +523,7 @@ const storeConfigs = {
 
 // Custom items array
 let customItems = [];
+let globalCardEnding = null; // Store consistent card ending
 
 // Initialize date input with current date/time
 document.addEventListener('DOMContentLoaded', function() {
@@ -721,7 +722,8 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     const config = storeConfigs[store];
     
     // Clear receipt and set store class
-    receipt.className = `receipt ${store}`;
+    const isMonochrome = document.getElementById('monochrome-mode').checked;
+    receipt.className = `receipt ${store}${isMonochrome ? ' monochrome' : ''}`;
     receipt.innerHTML = '';
     
     // Generate header
@@ -900,9 +902,14 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     const paymentDiv = document.createElement('div');
     paymentDiv.style.marginTop = '10px';
     paymentDiv.style.fontSize = '10px';
-    const paymentMethods = ['VISA', 'MASTERCARD', 'AMEX', 'DISCOVER'];
-    const selectedPayment = paymentMethods[Math.floor(Math.random() * paymentMethods.length)];
-    const lastFour = Math.floor(Math.random() * 9000) + 1000;
+    
+    // Always use VISA with consistent ending
+    const selectedPayment = 'VISA';
+    // Generate card ending once and reuse
+    if (!globalCardEnding) {
+        globalCardEnding = Math.floor(Math.random() * 9000) + 1000;
+    }
+    const lastFour = globalCardEnding;
     const authCode = generateAuthCode();
     
     // Store-specific payment formatting
@@ -1013,6 +1020,42 @@ function generateHeader(config, store) {
                             <pre class="ascii-logo">⊗ Circle K ⊗</pre>
                          </div>`;
         logo.classList.add('circlek-logo');
+    } else if (store === 'sevenelevn') {
+        // 7-Eleven
+        logo.innerHTML = `<div class="seveneleven-header">
+                            <pre class="ascii-logo">▌7-ELEVEN▐</pre>
+                         </div>`;
+        logo.classList.add('seveneleven-logo');
+    } else if (store === 'aldi') {
+        // ALDI
+        logo.innerHTML = `<div class="aldi-header">
+                            <pre class="ascii-logo">▬ A L D I ▬</pre>
+                         </div>`;
+        logo.classList.add('aldi-logo');
+    } else if (store === 'wholefoods') {
+        // Whole Foods
+        logo.innerHTML = `<div class="wholefoods-header">
+                            <pre class="ascii-logo">● WHOLE FOODS ●</pre>
+                         </div>`;
+        logo.classList.add('wholefoods-logo');
+    } else if (store === 'traderjoes') {
+        // Trader Joe's
+        logo.innerHTML = `<div class="traderjoes-header">
+                            <pre class="ascii-logo">⊕ TRADER JOE'S ⊕</pre>
+                         </div>`;
+        logo.classList.add('traderjoes-logo');
+    } else if (store === 'kroger') {
+        // Kroger
+        logo.innerHTML = `<div class="kroger-header">
+                            <pre class="ascii-logo">◈ KROGER ◈</pre>
+                         </div>`;
+        logo.classList.add('kroger-logo');
+    } else if (store === 'riteaid') {
+        // Rite Aid
+        logo.innerHTML = `<div class="riteaid-header">
+                            <pre class="ascii-logo">✚ RITE AID ✚</pre>
+                         </div>`;
+        logo.classList.add('riteaid-logo');
     }
     
     header.appendChild(logo);
