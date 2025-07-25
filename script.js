@@ -2,7 +2,7 @@
 
 // Version info
 const APP_VERSION = '2.0.0';
-const VERSION_DATE = '2025-01-24';
+const VERSION_DATE = '2025-07-24';
 
 // Store configurations
 const storeConfigs = {

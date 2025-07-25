@@ -1,6 +1,6 @@
 # Receipt Generator Changelog
 
-## Version 2.0.0 (2025-01-24)
+## Version 2.0.0 (2025-07-24)
 
 ### Major Features
 - Added 6 new stores: Kroger, 7-Eleven, ALDI, Whole Foods, Trader Joe's, and Rite Aid

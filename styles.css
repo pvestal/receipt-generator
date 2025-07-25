@@ -688,7 +688,7 @@ input:checked + .slider:before {
 }
 
 .walmart-header .ascii-logo {
-    color: #0071ce;
+    color: #0071CE;
     font-size: 13px;
     font-weight: bold;
 }
@@ -709,7 +709,7 @@ input:checked + .slider:before {
 }
 
 .target-header .ascii-logo {
-    color: #cc0000;
+    color: #CC0000;
     font-size: 14px;
     font-weight: bold;
 }
@@ -721,7 +721,7 @@ input:checked + .slider:before {
 }
 
 .cvs-header .ascii-logo {
-    color: #cc0000;
+    color: #CC0000;
     font-size: 13px;
     font-weight: bold;
 }
@@ -733,7 +733,7 @@ input:checked + .slider:before {
 }
 
 .walgreens-header .ascii-logo {
-    color: #e31837;
+    color: #E31837;
     font-size: 13px;
     font-weight: bold;
 }
@@ -745,7 +745,7 @@ input:checked + .slider:before {
 }
 
 .publix-header .ascii-logo {
-    color: #65a637;
+    color: #3E902D;
     font-size: 13px;
     font-weight: bold;
 }
@@ -757,7 +757,7 @@ input:checked + .slider:before {
 }
 
 .homedepot-header .ascii-logo {
-    color: #f96302;
+    color: #F96302;
     font-size: 12px;
     font-weight: bold;
 }
@@ -769,7 +769,7 @@ input:checked + .slider:before {
 }
 
 .costco-header .ascii-logo {
-    color: #0052cc;
+    color: #005BAD;
     font-size: 12px;
     font-weight: bold;
 }
@@ -781,7 +781,7 @@ input:checked + .slider:before {
 }
 
 .sams-header .ascii-logo {
-    color: #0071ce;
+    color: #0067A0;
     font-size: 13px;
     font-weight: bold;
 }
@@ -793,7 +793,7 @@ input:checked + .slider:before {
 }
 
 .winndixie-header .ascii-logo {
-    color: #e41e3a;
+    color: #E41E3A;
     font-size: 13px;
     font-weight: bold;
 }
@@ -805,10 +805,10 @@ input:checked + .slider:before {
 }
 
 .dg-header .ascii-logo {
-    color: #ffc500;
+    color: #FFF000;
     font-size: 13px;
     font-weight: bold;
-    background: #000;
+    background: #1C1B1B;
     padding: 2px 5px;
 }
 
@@ -819,7 +819,7 @@ input:checked + .slider:before {
 }
 
 .circlek-header .ascii-logo {
-    color: #ec1c24;
+    color: #EC1C24;
     font-size: 13px;
     font-weight: bold;
 }
@@ -831,11 +831,12 @@ input:checked + .slider:before {
 }
 
 .seveneleven-header .ascii-logo {
-    color: #00A758;
+    color: #FFFFFF;
     font-size: 13px;
     font-weight: bold;
-    background: #E30C19;
+    background: linear-gradient(to right, #FE6601 0%, #FE6601 40%, #016648 40%, #016648 60%, #F1050F 60%, #F1050F 100%);
     padding: 2px 5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 /* ALDI */
@@ -845,9 +846,13 @@ input:checked + .slider:before {
 }
 
 .aldi-header .ascii-logo {
-    color: #001f8f;
+    color: #00005F;
     font-size: 13px;
     font-weight: bold;
+    background: linear-gradient(to right, #FFC800 0%, #FFC800 25%, #FF7801 25%, #FF7801 50%, #5AC5F0 50%, #5AC5F0 75%, #D70000 75%, #D70000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Whole Foods */
@@ -857,7 +862,7 @@ input:checked + .slider:before {
 }
 
 .wholefoods-header .ascii-logo {
-    color: #00674b;
+    color: #00674B;
     font-size: 13px;
     font-weight: bold;
 }
@@ -869,7 +874,7 @@ input:checked + .slider:before {
 }
 
 .traderjoes-header .ascii-logo {
-    color: #d31245;
+    color: #D21242;
     font-size: 13px;
     font-weight: bold;
 }
@@ -881,7 +886,7 @@ input:checked + .slider:before {
 }
 
 .kroger-header .ascii-logo {
-    color: #0059a8;
+    color: #21409A;
     font-size: 13px;
     font-weight: bold;
 }
@@ -893,7 +898,7 @@ input:checked + .slider:before {
 }
 
 .riteaid-header .ascii-logo {
-    color: #0057a6;
+    color: #003DA6;
     font-size: 13px;
     font-weight: bold;
 }
