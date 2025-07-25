@@ -375,20 +375,23 @@ function setupMobileMenu() {
     // Close panel when clicking overlay
     mobileOverlay.addEventListener('click', closeControlPanel);
     
-    // Initialize panel as closed on mobile
-    if (window.innerWidth <= 768) {
+    // Initialize panel as closed on screens <= 1400px
+    if (window.innerWidth <= 1400) {
         controlsPanel.classList.add('closed');
     }
     
     // Handle window resize
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
+        if (window.innerWidth > 1400) {
+            // On large screens, remove closed state and overlay
             controlsPanel.classList.remove('closed');
             mobileOverlay.classList.remove('active');
             document.body.style.overflow = '';
-        } else if (controlsPanel.classList.contains('closed') === false) {
-            // If panel is open on resize to mobile, keep overlay active
-            mobileOverlay.classList.add('active');
+        } else {
+            // On smaller screens, if panel is open show overlay
+            if (!controlsPanel.classList.contains('closed')) {
+                mobileOverlay.classList.add('active');
+            }
         }
     });
 }

@@ -159,6 +159,29 @@ body {
     .controls-panel.closed {
         transform: translateX(-100%);
     }
+    
+    .mobile-toggle {
+        display: block;
+    }
+    
+    .close-panel {
+        display: block;
+    }
+    
+    .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 998;
+    }
+    
+    .mobile-overlay.active {
+        display: block;
+    }
 }
 
 @media (max-width: 768px) {
@@ -179,22 +202,6 @@ body {
     .receipt-container {
         margin-left: 0;
         padding: 20px;
-    }
-    
-    /* Overlay for mobile */
-    .mobile-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 998;
-    }
-    
-    .mobile-overlay.active {
-        display: block;
     }
 }
 
@@ -438,11 +445,20 @@ button:active {
 @media (max-width: 1400px) {
     .receipt-container {
         margin-left: 350px;
+        transition: margin-left 0.3s ease;
     }
     
     body:has(.controls-panel.closed) .receipt-container {
         margin-left: 0;
-        transition: margin-left 0.3s ease;
+    }
+}
+
+/* Fallback for browsers without :has() support */
+@supports not selector(:has(*)) {
+    @media (max-width: 1400px) {
+        .receipt-container {
+            margin-left: 0;
+        }
     }
 }
 
