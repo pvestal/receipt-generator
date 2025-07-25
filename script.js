@@ -356,7 +356,8 @@ function setupMobileMenu() {
     const mobileOverlay = document.querySelector('.mobile-overlay');
     
     // Open panel
-    mobileToggle.addEventListener('click', function() {
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
         controlsPanel.classList.remove('closed');
         mobileOverlay.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent body scroll when menu is open

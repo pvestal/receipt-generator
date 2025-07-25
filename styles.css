@@ -92,7 +92,7 @@ body {
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    z-index: 100;
+    z-index: 999;
 }
 
 /* Mobile toggle button */
@@ -101,7 +101,7 @@ body {
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 1000;
+    z-index: 1001;
     width: 40px;
     height: 40px;
     background: #495057;
@@ -110,6 +110,7 @@ body {
     cursor: pointer;
     padding: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    pointer-events: auto;
 }
 
 .mobile-toggle span {
@@ -158,6 +159,11 @@ body {
     
     .controls-panel.closed {
         transform: translateX(-100%);
+        pointer-events: none;
+    }
+    
+    .controls-panel {
+        pointer-events: auto;
     }
     
     .mobile-toggle {
@@ -196,7 +202,6 @@ body {
     .controls-panel {
         width: 85%;
         max-width: 350px;
-        z-index: 999;
     }
     
     .receipt-container {
