@@ -4,10 +4,10 @@
 const storeConfigs = {
     walmart: {
         name: 'Walmart',
-        logo: 'Walmart',
+        logo: 'WALMART',
         tagline: 'Save money. Live better.',
-        address: ['2550 S Hwy 29', 'Cantonment, FL 32533', '(850) 937-7001'],
-        storeNumber: '1632',
+        address: ['3767 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', '(850) 934-0362'],
+        storeNumber: '2533',
         items: [
             { name: 'GREAT VALUE MILK', price: 3.48 },
             { name: 'BANANA LB', price: 0.58 },
@@ -174,8 +174,8 @@ const storeConfigs = {
     costco: {
         name: 'Costco',
         logo: 'COSTCO WHOLESALE',
-        address: ['101 Technology Way', 'Gulf Breeze, FL 32561', 'Warehouse #681', '850-934-8898'],
-        storeNumber: '681',
+        address: ['1100 Airport Blvd', 'Pensacola, FL 32504', 'Warehouse #1423', '850-474-3011'],
+        storeNumber: '1423',
         items: [
             { name: 'KS ORGANIC EGGS 2DZ', price: 7.99 },
             { name: 'ROTISSERIE CHICKEN', price: 4.99 },
@@ -202,8 +202,8 @@ const storeConfigs = {
     costcogas: {
         name: 'Costco Gas',
         logo: 'COSTCO GASOLINE',
-        address: ['101 Technology Way', 'Gulf Breeze, FL 32561', 'Station #681'],
-        storeNumber: 'GS681',
+        address: ['1100 Airport Blvd', 'Pensacola, FL 32504', 'Station #1423'],
+        storeNumber: 'GS1423',
         items: [
             { name: 'REGULAR UNLEADED', price: 3.19, unit: '/GAL' },
             { name: 'PREMIUM UNLEADED', price: 3.69, unit: '/GAL' }
@@ -301,34 +301,34 @@ const storeConfigs = {
         paymentMethods: ['VISA', 'MASTERCARD', 'DISCOVER', 'DEBIT', 'EBT', 'CASH'],
         savingsMessage: 'DG Digital Savings'
     },
-    '7eleven': {
-        name: '7-Eleven',
-        logo: '7-ELEVEn',
-        tagline: 'Oh Thank Heaven',
-        address: ['1203 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32561', 'Store #39571', '850-916-8900'],
-        storeNumber: '39571',
+    'circle-k': {
+        name: 'Circle K',
+        logo: 'Circle K',
+        tagline: 'Simply Great Coffee',
+        address: ['3414 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', 'Store #2704388'],
+        storeNumber: '2704388',
         items: [
-            { name: 'BIG GULP 32OZ', price: 1.49 },
-            { name: 'SLURPEE LARGE', price: 1.99 },
-            { name: '7-SELECT WATER', price: 1.29 },
-            { name: 'HOT DOG', price: 2.49 },
-            { name: 'COFFEE 20OZ', price: 1.89 },
-            { name: 'TAQUITO 2PK', price: 3.00 },
+            { name: 'POLAR POP 44OZ', price: 0.99 },
+            { name: 'COFFEE LG 24OZ', price: 1.99 },
+            { name: 'FROSTER LARGE', price: 1.89 },
+            { name: 'HOT DOG GRILL', price: 2.49 },
+            { name: 'TORNADOS 2/$3', price: 3.00 },
             { name: 'DORITOS BAG', price: 2.99 },
-            { name: 'MONSTER ENERGY', price: 3.49 },
-            { name: '7-SELECT CHIPS', price: 2.00 },
-            { name: 'CANDY BAR KING', price: 2.19 },
-            { name: 'PIZZA SLICE', price: 2.99 },
-            { name: 'CIGARETTES PACK', price: 8.99 },
-            { name: '7-SELECT COOKIES', price: 2.49 },
-            { name: 'ICE BAG 10LB', price: 2.99 },
-            { name: 'BEER 6-PACK', price: 9.99 }
+            { name: 'BANG ENERGY', price: 2.99 },
+            { name: 'CIRCLE K WATER', price: 1.29 },
+            { name: 'CANDY BAR', price: 1.89 },
+            { name: 'BEEF JERKY', price: 6.99 },
+            { name: 'CIGARETTES PACK', price: 8.49 },
+            { name: 'BEER 6-PACK', price: 9.99 },
+            { name: 'ICE BAG 10LB', price: 2.49 },
+            { name: 'CAR WASH BASIC', price: 8.00 },
+            { name: 'SOUR PATCH KIDS', price: 2.49 }
         ],
         taxRate: 0.07,
-        memberProgram: '7REWARDS',
-        memberPrefix: '7R',
-        paymentMethods: ['VISA', 'MASTERCARD', 'DISCOVER', 'DEBIT', '7-ELEVEN WALLET', 'CASH'],
-        savingsMessage: 'Points earned'
+        memberProgram: 'Inner Circle',
+        memberPrefix: 'IC',
+        paymentMethods: ['VISA', 'MASTERCARD', 'DISCOVER', 'DEBIT', 'EASY PAY', 'CASH'],
+        savingsMessage: 'Inner Circle Savings'
     }
 };
 
@@ -630,7 +630,7 @@ function generateFooter(store) {
         samsclub: 'Thank you for shopping<br>Members save more<br>Visit SamsClub.com',
         'winn-dixie': 'Thank you for shopping local<br>Down home. Down the street.<br>See you again soon',
         'dollar-general': 'Thank you for shopping smart<br>Save time. Save money.<br>Every day',
-        '7eleven': 'Thank you!<br>Oh Thank Heaven for 7-Eleven<br>See you next time'
+        'circle-k': 'Thank you!<br>Visit us again soon<br>Download the Circle K app'
     };
     
     footer.innerHTML = messages[store];
@@ -710,7 +710,7 @@ function generateBarcodeData(store) {
         samsclub: '078742',
         'winn-dixie': '021130',
         'dollar-general': '049000',
-        '7eleven': '074203'
+        'circle-k': '704273'
     };
     
     const prefix = storePrefixes[store] || '100';
