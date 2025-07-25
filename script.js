@@ -882,10 +882,17 @@ function generateFooter(store) {
     const barcodeData = generateBarcodeData(store);
     const barcodeElement = document.createElement('div');
     
-    // Use different barcode types for different stores
-    if (store === 'walmart' || store === 'target') {
+    // Use different barcode types based on actual store usage
+    const code128Stores = ['walmart', 'costco', 'costcogas', 'samsclub', 'homedepot'];
+    const code39Stores = ['cvs', 'walgreens', 'publix', 'winn-dixie', 'dollar-general', 'circle-k'];
+    
+    if (code128Stores.includes(store)) {
         barcodeElement.className = 'barcode-128';
         barcodeElement.textContent = barcodeData;
+    } else if (store === 'target') {
+        // Target uses special formatting for DPCI
+        barcodeElement.className = 'barcode-128';
+        barcodeElement.textContent = barcodeData.replace(/-/g, '');
     } else {
         barcodeElement.className = 'barcode-39';
         barcodeElement.textContent = '*' + barcodeData + '*';
@@ -945,54 +952,55 @@ function generateMemberId(prefix) {
 }
 
 function generateBarcodeData(store) {
-    // Match actual store barcode patterns
+    // Generate realistic barcode data based on actual store formats
     const date = new Date();
     const storeNum = storeConfigs[store].storeNumber || '0000';
-    const trans = Math.floor(Math.random() * 9999) + 1;
+    const trans = Math.floor(Math.random() * 99999) + 1;
+    const reg = Math.floor(Math.random() * 30) + 1;
     
     if (store === 'walmart') {
-        // Walmart: ST# + REG# + TRANS# + DATE (matches actual)
-        const reg = Math.floor(Math.random() * 30) + 1;
-        return `${storeNum} ${reg.toString().padStart(2, '0')} ${trans.toString().padStart(4, '0')} ${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        // Walmart uses Code 128 with format: SSSSRRTTTTTTMMDDYY
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}${date.getFullYear().toString().substr(-2)}`;
+        return `${storeNum}${reg.toString().padStart(2, '0')}${trans.toString().padStart(6, '0')}${dateStr}`;
     } else if (store === 'target') {
-        // Target: DPCI style barcode
-        const dpci = `${Math.floor(Math.random() * 999).toString().padStart(3, '0')}-${Math.floor(Math.random() * 99).toString().padStart(2, '0')}-${Math.floor(Math.random() * 9999).toString().padStart(4, '0')}`;
-        return dpci;
+        // Target uses DPCI (Department-Class-Item) format: DDD-CC-IIII
+        const dept = Math.floor(Math.random() * 900) + 100;
+        const cls = Math.floor(Math.random() * 90) + 10;
+        const item = Math.floor(Math.random() * 9000) + 1000;
+        return `${dept}-${cls}-${item}`;
     } else if (store === 'cvs') {
-        // CVS: Store# + Date + Transaction
-        return `${storeNum} ${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')} ${trans.toString().padStart(4, '0')}`;
+        // CVS uses format: SSSSS YYMMDD TTTTT
+        const dateStr = `${date.getFullYear().toString().substr(-2)}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `${storeNum} ${dateStr} ${trans.toString().padStart(5, '0')}`;
     } else if (store === 'walgreens') {
-        // Walgreens: Similar to CVS
-        return `WAG ${storeNum} ${trans.toString().padStart(5, '0')}`;
+        // Walgreens format: WALSSSSSTTTTTTT
+        return `WAL${storeNum}${trans.toString().padStart(7, '0')}`;
     } else if (store === 'publix') {
-        // Publix: Store-Register-Trans-Date
-        const reg = Math.floor(Math.random() * 15) + 1;
-        return `${storeNum}-${reg.toString().padStart(2, '0')}-${trans.toString().padStart(4, '0')}-${date.getMonth() + 1}${date.getDate()}`;
+        // Publix format: SSSS RR TTTTTT MMDD
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `${storeNum} ${reg.toString().padStart(2, '0')} ${trans.toString().padStart(6, '0')} ${dateStr}`;
     } else if (store === 'homedepot') {
-        // Home Depot: Store + Register + Trans + Date/Time
-        const reg = Math.floor(Math.random() * 20) + 1;
-        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(5, '0')} ${date.getHours()}${date.getMinutes()}`;
+        // Home Depot format: SSSS RRR TTTTTTT
+        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(7, '0')}`;
     } else if (store === 'costco' || store === 'costcogas') {
-        // Costco: Warehouse# + Register + Transaction
-        const reg = Math.floor(Math.random() * 50) + 1;
-        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(6, '0')}`;
+        // Costco format: SSSS RRR TTTTTTTT
+        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(8, '0')}`;
     } else if (store === 'samsclub') {
-        // Sam's: Club# + Transaction + Date
-        return `${storeNum} ${trans.toString().padStart(6, '0')} ${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate()}`;
+        // Sam's Club format: SSSS TTTTTTTT MMDD
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `${storeNum} ${trans.toString().padStart(8, '0')} ${dateStr}`;
     } else if (store === 'winn-dixie') {
-        // Winn-Dixie: Store-Register-Trans
-        const reg = Math.floor(Math.random() * 12) + 1;
-        return `${storeNum}-${reg}-${trans.toString().padStart(4, '0')}`;
+        // Winn-Dixie format: SSS-RR-TTTTT
+        return `${storeNum.substr(-3)}-${reg.toString().padStart(2, '0')}-${trans.toString().padStart(5, '0')}`;
     } else if (store === 'dollar-general') {
-        // Dollar General: Store + Trans + Time
-        return `${storeNum} ${trans.toString().padStart(4, '0')} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+        // Dollar General format: SSSSS TTTTTT
+        return `${storeNum} ${trans.toString().padStart(6, '0')}`;
     } else if (store === 'circle-k') {
-        // Circle K: Store# + Shift + Trans
-        const shift = Math.floor(Math.random() * 3) + 1;
-        return `${storeNum} S${shift} ${trans.toString().padStart(5, '0')}`;
+        // Circle K format: SSSSSSS TTTTTT
+        return `${storeNum} ${trans.toString().padStart(6, '0')}`;
     } else {
         // Default format
-        return `${storeNum} ${trans.toString().padStart(6, '0')}`;
+        return `${storeNum} ${trans.toString().padStart(8, '0')}`;
     }
 }
 
