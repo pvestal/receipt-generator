@@ -524,6 +524,7 @@ const storeConfigs = {
 // Custom items array
 let customItems = [];
 let globalCardEnding = null; // Store consistent card ending
+let globalExpDate = null; // Store consistent expiration date
 
 // Initialize date input with current date/time
 document.addEventListener('DOMContentLoaded', function() {
@@ -903,11 +904,19 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     paymentDiv.style.marginTop = '10px';
     paymentDiv.style.fontSize = '10px';
     
-    // Always use VISA with consistent ending
-    const selectedPayment = 'VISA';
-    // Generate card ending once and reuse
+    // Always use AMEX with consistent ending
+    const selectedPayment = 'AMEX';
+    // Generate card ending once and reuse (AMEX uses 4 digits)
     if (!globalCardEnding) {
         globalCardEnding = Math.floor(Math.random() * 9000) + 1000;
+    }
+    if (!globalExpDate) {
+        // Generate realistic exp date (1-3 years in future)
+        const futureDate = new Date();
+        futureDate.setFullYear(futureDate.getFullYear() + Math.floor(Math.random() * 3) + 1);
+        const month = String(futureDate.getMonth() + 1).padStart(2, '0');
+        const year = String(futureDate.getFullYear()).slice(-2);
+        globalExpDate = `${month}/${year}`;
     }
     const lastFour = globalCardEnding;
     const authCode = generateAuthCode();
@@ -917,19 +926,20 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
         paymentDiv.innerHTML = `
             <div>CARD TYPE: ${selectedPayment}</div>
             <div>ACCOUNT: ***********${lastFour}</div>
+            <div>EXP DATE: ${globalExpDate}</div>
             <div>APPROVAL: ${authCode}</div>
             <div>AMOUNT: $${total.toFixed(2)}</div>
         `;
     } else if (store === 'costco' || store === 'samsclub') {
         paymentDiv.innerHTML = `
             <div>${selectedPayment} ENDING IN ${lastFour}</div>
-            <div>AUTH CODE: ${authCode}</div>
+            <div>EXP: ${globalExpDate} AUTH: ${authCode}</div>
             <div>TOTAL AMOUNT: $${total.toFixed(2)}</div>
             <div>PAYMENT APPROVED</div>
         `;
     } else {
         paymentDiv.innerHTML = `
-            <div>${selectedPayment} ***${lastFour}</div>
+            <div>${selectedPayment} ***${lastFour} EXP ${globalExpDate}</div>
             <div>APPROVED ${authCode}</div>
             <div>AMOUNT: $${total.toFixed(2)}</div>
         `;
@@ -1202,7 +1212,13 @@ function generateCashierName() {
 }
 
 function generateAuthCode() {
-    return Math.random().toString(36).substr(2, 6).toUpperCase();
+    // More realistic auth codes (6 alphanumeric characters)
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let authCode = '';
+    for (let i = 0; i < 6; i++) {
+        authCode += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return authCode;
 }
 
 function generateMemberId(prefix) {
