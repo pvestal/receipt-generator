@@ -541,6 +541,19 @@ button:active {
     z-index: 10;
 }
 
+/* ASCII Logo Styles */
+.ascii-logo {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+    line-height: 1.2;
+    white-space: pre;
+}
+
 /* Store logos - Receipt style */
 
 /* Walmart */
@@ -549,22 +562,18 @@ button:active {
     margin-bottom: 8px;
 }
 
-.walmart-name {
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 4px;
-    font-family: 'Arial Black', sans-serif;
-    text-transform: uppercase;
-    color: #0071ce;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+.walmart-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 .walmart-tagline {
     font-size: 9px;
-    margin-top: 3px;
-    font-family: 'Arial', sans-serif;
+    margin-top: -2px;
+    font-family: 'Courier Prime', monospace;
     letter-spacing: 0.5px;
     color: #333;
+    text-transform: uppercase;
 }
 
 /* Target */
@@ -573,13 +582,9 @@ button:active {
     margin-bottom: 8px;
 }
 
-.target-name {
-    font-size: 24px;
-    font-weight: 900;
-    letter-spacing: 5px;
-    font-family: 'Helvetica Neue', 'Arial', sans-serif;
-    color: #cc0000;
-    text-transform: uppercase;
+.target-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 14px;
 }
 
 /* CVS */
@@ -588,19 +593,9 @@ button:active {
     margin-bottom: 8px;
 }
 
-.cvs-name {
-    font-size: 20px;
-    font-weight: 900;
-    font-family: 'Arial Black', sans-serif;
-    letter-spacing: -1px;
-}
-
-.cvs-name::after {
-    content: '/pharmacy';
-    font-size: 14px;
-    font-weight: normal;
-    font-style: italic;
-    margin-left: 2px;
+.cvs-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 /* Walgreens */
@@ -609,13 +604,9 @@ button:active {
     margin-bottom: 8px;
 }
 
-.walgreens-name {
-    font-size: 19px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    font-family: 'Arial Black', sans-serif;
-    color: #e31837;
-    text-transform: uppercase;
+.walgreens-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 /* Publix */
@@ -624,13 +615,9 @@ button:active {
     margin-bottom: 8px;
 }
 
-.publix-name {
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    font-family: 'Georgia', serif;
-    color: #00823d;
-    text-transform: uppercase;
+.publix-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 /* Home Depot */
@@ -639,13 +626,9 @@ button:active {
     margin-bottom: 8px;
 }
 
-.homedepot-name {
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    font-family: 'Arial Black', sans-serif;
-    color: #f96302;
-    text-transform: uppercase;
+.homedepot-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 12px;
 }
 
 /* Costco */
@@ -654,63 +637,53 @@ button:active {
     margin-bottom: 8px;
 }
 
-.costco-name {
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    font-family: 'Arial Black', sans-serif;
-    color: #0054a6;
-    text-transform: uppercase;
+.costco-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 12px;
 }
 
 /* Sam's Club */
 .sams-header {
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-.sams-name {
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    font-family: monospace;
+.sams-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 /* Winn-Dixie */
 .winndixie-header {
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-.winndixie-name {
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    font-family: monospace;
+.winndixie-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 /* Dollar General */
 .dg-header {
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-.dg-name {
-    font-size: 14px;
-    font-weight: bold;
-    font-family: monospace;
+.dg-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 /* Circle K */
 .circlek-header {
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-.circlek-name {
-    font-size: 16px;
-    font-weight: bold;
-    font-family: monospace;
+.circlek-header .ascii-logo {
+    color: #1a1a1a;
+    font-size: 13px;
 }
 
 .store-tagline {
@@ -795,14 +768,28 @@ button:active {
 .receipt-divider {
     border: 0;
     text-align: center;
-    margin: 8px 0;
-    opacity: 0.8;
+    margin: 10px 0;
+    opacity: 0.9;
+    overflow: hidden;
+    height: 12px;
+    position: relative;
 }
 
 .receipt-divider::after {
-    content: '====================================';
-    letter-spacing: -2px;
-    font-size: 10px;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: repeating-linear-gradient(
+        to right,
+        #333,
+        #333 8px,
+        transparent 8px,
+        transparent 10px
+    );
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .receipt-divider.double {
@@ -810,7 +797,14 @@ button:active {
 }
 
 .receipt-divider.double::after {
-    content: '********************************';
+    height: 3px;
+    background: repeating-linear-gradient(
+        to right,
+        #333,
+        #333 2px,
+        transparent 2px,
+        transparent 4px
+    );
 }
 
 .member-info {
@@ -902,38 +896,67 @@ button:active {
 }
 
 .barcode {
-    margin: 15px 0 10px 0;
+    margin: 20px 0 15px 0;
     text-align: center;
+    position: relative;
+}
+
+/* Add lines above and below barcode */
+.barcode::before,
+.barcode::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: repeating-linear-gradient(
+        to right,
+        #000,
+        #000 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    opacity: 0.3;
+}
+
+.barcode::before {
+    margin-bottom: 8px;
+}
+
+.barcode::after {
+    margin-top: 8px;
 }
 
 .barcode-128 {
     font-family: 'Libre Barcode 128', monospace;
-    font-size: 56px;
+    font-size: 60px;
     line-height: 1;
     letter-spacing: 0;
-    opacity: 0.95;
-    transform: scaleX(0.85);
+    opacity: 1;
+    transform: scaleX(0.8) scaleY(0.9);
     margin: 0 auto;
     width: fit-content;
+    filter: contrast(1.2);
 }
 
 .barcode-39 {
     font-family: 'Libre Barcode 39', monospace;
-    font-size: 42px;
+    font-size: 46px;
     line-height: 1;
-    letter-spacing: 0.5px;
-    opacity: 0.9;
-    transform: scaleX(1);
+    letter-spacing: 0;
+    opacity: 0.95;
+    transform: scaleX(0.95);
     margin: 0 auto;
     width: fit-content;
+    filter: contrast(1.1);
 }
 
 .barcode-number {
     font-family: 'Courier New', monospace;
-    font-size: 8px;
-    margin-top: 3px;
-    letter-spacing: 1px;
-    opacity: 0.7;
+    font-size: 9px;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+    font-weight: 600;
 }
 
 .qr-code {
@@ -1000,7 +1023,13 @@ button:active {
 
 .receipt.cvs .receipt-divider::after,
 .receipt.walgreens .receipt-divider::after {
-    content: '========================================';
+    background: repeating-linear-gradient(
+        to right,
+        #333,
+        #333 12px,
+        transparent 12px,
+        transparent 14px
+    );
 }
 
 /* Print styles */

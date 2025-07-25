@@ -727,74 +727,74 @@ function generateHeader(config, store) {
     logo.className = 'store-logo';
     
     if (store === 'walmart') {
-        // Walmart - styled like actual receipts
+        // Walmart with star logo
         logo.innerHTML = `<div class="walmart-header">
-                            <div class="walmart-name">Walmart</div>
+                            <pre class="ascii-logo">★ ★ ★  WALMART  ★ ★ ★</pre>
                             <div class="walmart-tagline">Save money. Live better.</div>
                          </div>`;
         logo.classList.add('walmart-logo');
     } else if (store === 'target') {
-        // Target - bold red logo
+        // Target with bullseye
         logo.innerHTML = `<div class="target-header">
-                            <div class="target-name">TARGET</div>
+                            <pre class="ascii-logo">◎  T A R G E T  ◎</pre>
                          </div>`;
         logo.classList.add('target-logo');
     } else if (store === 'cvs') {
-        // CVS with pharmacy style
+        // CVS with heart
         logo.innerHTML = `<div class="cvs-header">
-                            <div class="cvs-name">CVS</div>
+                            <pre class="ascii-logo">♥ CVS/pharmacy ♥</pre>
                          </div>`;
         logo.classList.add('cvs-logo');
     } else if (store === 'walgreens') {
-        // Walgreens red logo
+        // Walgreens with W
         logo.innerHTML = `<div class="walgreens-header">
-                            <div class="walgreens-name">Walgreens</div>
+                            <pre class="ascii-logo">═ W A L G R E E N S ═</pre>
                          </div>`;
         logo.classList.add('walgreens-logo');
     } else if (store === 'publix') {
-        // Publix green logo
+        // Publix
         logo.innerHTML = `<div class="publix-header">
-                            <div class="publix-name">PUBLIX</div>
+                            <pre class="ascii-logo">▪▪▪ P U B L I X ▪▪▪</pre>
                          </div>`;
         logo.classList.add('publix-logo');
     } else if (store === 'homedepot') {
-        // Home Depot orange
+        // Home Depot with house
         logo.innerHTML = `<div class="homedepot-header">
-                            <div class="homedepot-name">THE HOME DEPOT</div>
+                            <pre class="ascii-logo">⌂ THE HOME DEPOT ⌂</pre>
                          </div>`;
         logo.classList.add('homedepot-logo');
     } else if (store === 'costco') {
         logo.innerHTML = `<div class="costco-header">
-                            <div class="costco-name">COSTCO</div>
+                            <pre class="ascii-logo">▓▓ COSTCO WHOLESALE ▓▓</pre>
                          </div>`;
         logo.classList.add('costco-logo');
     } else if (store === 'costcogas') {
         logo.innerHTML = `<div class="costco-header">
-                            <div class="costco-name">COSTCO GAS</div>
+                            <pre class="ascii-logo">⛽ COSTCO GASOLINE ⛽</pre>
                          </div>`;
         logo.classList.add('costco-logo');
     } else if (store === 'samsclub') {
         // Sam's Club
         logo.innerHTML = `<div class="sams-header">
-                            <div class="sams-name">SAM'S CLUB</div>
+                            <pre class="ascii-logo">■ SAM'S CLUB ■</pre>
                          </div>`;
         logo.classList.add('samsclub-logo');
     } else if (store === 'winn-dixie') {
         // Winn-Dixie
         logo.innerHTML = `<div class="winndixie-header">
-                            <div class="winndixie-name">WINN-DIXIE</div>
+                            <pre class="ascii-logo">◆ WINN-DIXIE ◆</pre>
                          </div>`;
         logo.classList.add('winndixie-logo');
     } else if (store === 'dollar-general') {
         // Dollar General
         logo.innerHTML = `<div class="dg-header">
-                            <div class="dg-name">DOLLAR GENERAL</div>
+                            <pre class="ascii-logo">$ DOLLAR GENERAL $</pre>
                          </div>`;
         logo.classList.add('dg-logo');
     } else if (store === 'circle-k') {
         // Circle K
         logo.innerHTML = `<div class="circlek-header">
-                            <div class="circlek-name">Circle K</div>
+                            <pre class="ascii-logo">⊗ Circle K ⊗</pre>
                          </div>`;
         logo.classList.add('circlek-logo');
     }
