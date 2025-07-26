@@ -8,7 +8,7 @@ const VERSION_DATE = '2025-07-26';
 const storeConfigs = {
     walmart: {
         name: 'Walmart',
-        logo: 'W A L M A R T',
+        logo: 'WALMART',
         tagline: 'Save money. Live better.',
         address: ['3767 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32563', '(850) 934-0362'],
         storeNumber: '2533',
@@ -52,7 +52,7 @@ const storeConfigs = {
     },
     target: {
         name: 'Target',
-        logo: 'T A R G E T',
+        logo: 'TARGET',
         address: ['6255 N Davis Hwy', 'Pensacola, FL 32504', '(850) 478-0047'],
         storeNumber: 'T2847',
         items: [
@@ -137,7 +137,7 @@ const storeConfigs = {
     },
     publix: {
         name: 'Publix',
-        logo: 'P U B L I X',
+        logo: 'Publix',
         tagline: 'Where Shopping is a Pleasure',
         address: ['1010 Gulf Breeze Pkwy', 'Gulf Breeze, FL 32561', 'Store #1546', '850-934-0179'],
         items: [
@@ -192,7 +192,7 @@ const storeConfigs = {
     },
     costco: {
         name: 'Costco',
-        logo: 'C O S T C O',
+        logo: 'COSTCO WHOLESALE',
         address: ['1100 Airport Blvd', 'Pensacola, FL 32504', 'Warehouse #1423', '850-474-3011'],
         storeNumber: '1423',
         items: [
@@ -220,7 +220,7 @@ const storeConfigs = {
     },
     costcogas: {
         name: 'Costco Gas',
-        logo: 'C O S T C O  GAS',
+        logo: 'COSTCO GASOLINE',
         address: ['1100 Airport Blvd', 'Pensacola, FL 32504', 'Station #1423'],
         storeNumber: 'GS1423',
         items: [
@@ -235,7 +235,7 @@ const storeConfigs = {
     },
     samsclub: {
         name: "Sam's Club",
-        logo: "S A M ' S  C L U B",
+        logo: "SAM'S CLUB",
         tagline: 'Members Mark',
         address: ['3546 S Blue Angel Pkwy', 'Pensacola, FL 32506', 'Club #6686', '850-453-6808'],
         storeNumber: '6686',
@@ -971,26 +971,27 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     receipt.appendChild(footer);
 }
 
-function getLogoText(store, isColorMode) {
+function getLogoText(store) {
+    // Real receipt headers - no decorative symbols
     const logos = {
-        'walmart': isColorMode ? '★ ★ ★  WALMART  ★ ★ ★' : 'WALMART',
-        'target': isColorMode ? '◎  T A R G E T  ◎' : 'TARGET',
-        'cvs': isColorMode ? '♥ CVS/pharmacy ♥' : 'CVS/pharmacy',
-        'walgreens': isColorMode ? '═ W A L G R E E N S ═' : 'WALGREENS',
-        'publix': isColorMode ? '▪▪▪ P U B L I X ▪▪▪' : 'PUBLIX',
-        'homedepot': isColorMode ? '⌂ THE HOME DEPOT ⌂' : 'THE HOME DEPOT',
-        'costco': isColorMode ? '▓▓ COSTCO WHOLESALE ▓▓' : 'COSTCO WHOLESALE',
-        'costcogas': isColorMode ? '⛽ COSTCO GASOLINE ⛽' : 'COSTCO GASOLINE',
-        'samsclub': isColorMode ? '■ SAM\'S CLUB ■' : 'SAM\'S CLUB',
-        'winn-dixie': isColorMode ? '◆ WINN-DIXIE ◆' : 'WINN-DIXIE',
-        'dollar-general': isColorMode ? '$ DOLLAR GENERAL $' : 'DOLLAR GENERAL',
-        'circle-k': isColorMode ? '⊗ Circle K ⊗' : 'Circle K',
-        'sevenelevn': isColorMode ? '▌7-ELEVEN▐' : '7-ELEVEN',
-        'aldi': isColorMode ? '▬ A L D I ▬' : 'ALDI',
-        'wholefoods': isColorMode ? '● WHOLE FOODS ●' : 'WHOLE FOODS MARKET',
-        'traderjoes': isColorMode ? '⊕ TRADER JOE\'S ⊕' : 'TRADER JOE\'S',
-        'kroger': isColorMode ? '◈ KROGER ◈' : 'KROGER',
-        'riteaid': isColorMode ? '✚ RITE AID ✚' : 'RITE AID'
+        'walmart': 'WALMART',
+        'target': 'TARGET',
+        'cvs': 'CVS/pharmacy',
+        'walgreens': 'Walgreens',
+        'publix': 'Publix',
+        'homedepot': 'THE HOME DEPOT',
+        'costco': 'COSTCO WHOLESALE',
+        'costcogas': 'COSTCO GASOLINE',
+        'samsclub': "SAM'S CLUB",
+        'winn-dixie': 'Winn-Dixie',
+        'dollar-general': 'DOLLAR GENERAL',
+        'circle-k': 'Circle K',
+        'sevenelevn': '7-ELEVEN',
+        'aldi': 'ALDI',
+        'wholefds': 'WHOLE FOODS MARKET',
+        'traderjoes': "TRADER JOE'S",
+        'kroger': 'Kroger',
+        'riteaid': 'RITE AID'
     };
     return logos[store] || config.logo;
 }
@@ -1003,8 +1004,7 @@ function generateHeader(config, store) {
     const logo = document.createElement('div');
     logo.className = 'store-logo';
     
-    const isColorMode = document.getElementById('color-mode').checked;
-    const logoText = getLogoText(store, isColorMode);
+    const logoText = getLogoText(store);
     
     // Simplified logo generation using logoText
     const headerClass = store === 'winn-dixie' ? 'winndixie' : 
