@@ -1,7 +1,7 @@
 // Store logos removed - will use text-only headers
 
 // Version info
-const APP_VERSION = '2.1.0';
+const APP_VERSION = '2.2.0';
 const VERSION_DATE = '2025-07-26';
 
 // Store configurations

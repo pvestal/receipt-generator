@@ -1,5 +1,32 @@
 # Receipt Generator Changelog
 
+## Version 2.2.0 (2025-07-26)
+
+### Major Logo & Styling Overhaul
+- **CSS Expert Review**: Complete redesign of all store logos by CSS styling expert
+- **Brand-Authentic Colors**: Each store now uses accurate brand colors and typography
+- **Professional Typography**: Arial Black for corporate, Georgia serif for premium stores
+- **Visual Effects**: Text shadows, gradients, borders, and backgrounds matching real receipts
+
+### Store-Specific Enhancements
+- **7-Eleven**: Multi-color stripe background matching brand
+- **ALDI**: Rainbow gradient text effect
+- **Dollar General**: Authentic black/yellow styling
+- **CVS/Walgreens/Rite Aid**: Pharmacy indicators and medical styling
+- **Costco/Sam's Club**: Warehouse club borders and member styling
+- **Whole Foods/Trader Joe's**: Premium organic-inspired designs
+
+### Technical Improvements
+- **Research-Based Logos**: Updated all logos based on actual receipt research
+- **JavaScript Fixes**: Fixed undefined variables and improved error handling
+- **Print Compatibility**: Complete monochrome overrides for black-and-white printing
+- **Thermal Printer Effects**: Added authentic receipt artifacts and styling
+
+### Code Quality
+- **Null Checks**: Added safety checks for DOM elements
+- **Error Handling**: Improved function parameter handling
+- **Linting Fixes**: Resolved all JavaScript linting issues
+
 ## Version 2.1.0 (2025-07-26)
 
 ### Date & Time Improvements
