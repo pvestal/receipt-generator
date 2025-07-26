@@ -589,6 +589,12 @@ function setupMobileMenu() {
     const controlsPanel = document.querySelector('.controls-panel');
     const mobileOverlay = document.querySelector('.mobile-overlay');
     
+    // Check if all elements exist before proceeding
+    if (!mobileToggle || !closePanel || !controlsPanel || !mobileOverlay) {
+        console.warn('Mobile menu elements not found');
+        return;
+    }
+    
     // Open panel
     mobileToggle.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -659,7 +665,7 @@ document.getElementById('random-store').addEventListener('change', function() {
 });
 
 // Tab functionality
-window.showTab = function(tabName) {
+window.showTab = function(tabName, event) {
     // Hide all tab contents
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(tab => {
@@ -673,10 +679,15 @@ window.showTab = function(tabName) {
     });
     
     // Show selected tab
-    document.getElementById(`${tabName}-tab`).classList.add('active');
+    const targetTab = document.getElementById(`${tabName}-tab`);
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
     
     // Add active class to clicked button
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
 };
 
 function addCustomItem() {
@@ -1017,6 +1028,7 @@ function generateHeader(config, store) {
                        store === 'costcogas' ? 'costco' : 
                        store === 'samsclub' ? 'sams' : store;
                        
+    const isColorMode = document.getElementById('color-mode').checked;
     logo.innerHTML = `<div class="${headerClass}-header">
                         <pre class="ascii-logo">${logoText}</pre>
                         ${store === 'walmart' && isColorMode ? '<div class="walmart-tagline">Save money. Live better.</div>' : ''}
