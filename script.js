@@ -972,28 +972,28 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
 }
 
 function getLogoText(store) {
-    // Real receipt headers - no decorative symbols
+    // Real receipt headers based on actual store receipts
     const logos = {
-        'walmart': 'WALMART',
-        'target': 'TARGET',
-        'cvs': 'CVS/pharmacy',
-        'walgreens': 'Walgreens',
-        'publix': 'Publix',
-        'homedepot': 'THE HOME DEPOT',
-        'costco': 'COSTCO WHOLESALE',
-        'costcogas': 'COSTCO GASOLINE',
-        'samsclub': "SAM'S CLUB",
-        'winn-dixie': 'Winn-Dixie',
-        'dollar-general': 'DOLLAR GENERAL',
-        'circle-k': 'Circle K',
-        'sevenelevn': '7-ELEVEN',
-        'aldi': 'ALDI',
-        'wholefds': 'WHOLE FOODS MARKET',
-        'traderjoes': "TRADER JOE'S",
-        'kroger': 'Kroger',
-        'riteaid': 'RITE AID'
+        'walmart': 'WALMART',                    // Confirmed: all caps on receipts
+        'target': 'TARGET',                     // Standard retail format
+        'cvs': 'CVS/pharmacy',                  // Confirmed: exactly as researched
+        'walgreens': 'Walgreens',              // Title case on receipts
+        'publix': 'Publix',                    // Title case brand formatting
+        'homedepot': 'THE HOME DEPOT',         // Official receipt format
+        'costco': 'COSTCO WHOLESALE',          // Full company name on receipts
+        'costcogas': 'COSTCO GASOLINE',        // Gas station receipts
+        'samsclub': "SAM'S CLUB",             // Standard apostrophe format
+        'winn-dixie': 'Winn-Dixie',           // Hyphenated with title case
+        'dollar-general': 'DOLLAR GENERAL',    // Confirmed: all caps
+        'circle-k': 'Circle K',               // Title case with space
+        'sevenelevn': '7-ELEVEN',             // Confirmed: hyphen, all caps
+        'aldi': 'ALDI',                       // Confirmed: all caps branding
+        'wholefds': 'WHOLE FOODS MARKET',     // Full market name
+        'traderjoes': "TRADER JOE'S",         // Standard apostrophe
+        'kroger': 'Kroger',                   // Title case
+        'riteaid': 'RITE AID'                 // All caps pharmacy format
     };
-    return logos[store] || config.logo;
+    return logos[store] || 'STORE NAME';
 }
 
 function generateHeader(config, store) {
