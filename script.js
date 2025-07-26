@@ -839,7 +839,7 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     
     // Add custom items first
     customItems.forEach(item => {
-        const itemDiv = createItemLine(item.name, item.price);
+        const itemDiv = createItemLine(item.name, item.price, false, store);
         itemsContainer.appendChild(itemDiv);
         subtotal += item.price;
     });
@@ -868,7 +868,7 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     } else {
         selectedItems.forEach((item, index) => {
             const includeCode = store === 'walmart' || store === 'target' || store === 'costco';
-            const itemDiv = createItemLine(item.name, item.price, includeCode);
+            const itemDiv = createItemLine(item.name, item.price, includeCode, store);
             itemsContainer.appendChild(itemDiv);
             subtotal += item.price;
             
@@ -920,13 +920,29 @@ function generateReceiptInDiv(receipt, store, itemCount, maxPrice, date) {
     
     receipt.appendChild(totalsDiv);
     
-    // Savings info with more realistic calculation
+    // Enhanced store-specific savings messages
     if (config.savingsMessage && subtotal > 20) {
         const savingsPercent = Math.random() * 0.15 + 0.05; // 5-20% savings
         const savings = (subtotal * savingsPercent).toFixed(2);
         const savingsDiv = document.createElement('div');
         savingsDiv.className = 'savings-info';
-        savingsDiv.innerHTML = `*** ${config.savingsMessage}: $${savings} ***`;
+        
+        let savingsText = '';
+        if (store === 'walmart') {
+            savingsText = `*** YOU SAVED $${savings} TODAY ***<br>*** Great Value Brand Savings ***`;
+        } else if (store === 'target') {
+            const circleEarnings = (subtotal * 0.01).toFixed(2); // 1% Circle earnings
+            savingsText = `*** Target Circle earnings: $${circleEarnings} ***<br>*** You saved: $${savings} ***`;
+        } else if (store === 'cvs') {
+            const extracareSavings = (subtotal * 0.08).toFixed(2);
+            savingsText = `*** ExtraCare savings: $${extracareSavings} ***<br>*** Visit CVS.com for exclusive offers ***`;
+        } else if (store === 'costco') {
+            savingsText = `*** Member savings: $${savings} ***<br>*** Your savings add up! ***`;
+        } else {
+            savingsText = `*** ${config.savingsMessage}: $${savings} ***`;
+        }
+        
+        savingsDiv.innerHTML = savingsText;
         receipt.appendChild(savingsDiv);
     }
     
@@ -1047,22 +1063,41 @@ function generateHeader(config, store) {
     return header;
 }
 
-function createItemLine(name, price, includeCode = false) {
+function createItemLine(name, price, includeCode = false, store = '') {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'receipt-item';
     
-    // Sometimes add item codes for realism
-    const itemCode = includeCode && Math.random() > 0.5 ? 
-        `${Math.floor(Math.random() * 900000) + 100000} ` : '';
+    // Add department codes based on store
+    let deptCode = '';
+    if (store === 'walmart' || includeCode) {
+        // Walmart department codes: 001=grocery, 002=dairy, 003=meat, 004=produce, etc.
+        const deptCodes = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010'];
+        deptCode = deptCodes[Math.floor(Math.random() * deptCodes.length)] + '    ';
+    } else if (store === 'target') {
+        // Target DPCI numbers (3 digits + hyphen + 2 digits + hyphen + 4 digits)
+        const dept = Math.floor(Math.random() * 300) + 1;
+        const class1 = Math.floor(Math.random() * 99) + 1; 
+        const item = Math.floor(Math.random() * 9999) + 1;
+        deptCode = `${dept.toString().padStart(3, '0')}-${class1.toString().padStart(2, '0')}-${item.toString().padStart(4, '0')} `;
+    } else if (store === 'cvs') {
+        // CVS NDC numbers for pharmacy items
+        const ndc = Math.floor(Math.random() * 999999) + 100000;
+        deptCode = Math.random() > 0.7 ? `NDC${ndc} ` : '';
+    }
     
-    // Format price with proper alignment
-    const priceStr = price.toFixed(2);
-    const paddedPrice = priceStr.padStart(7, ' ');
+    // Format price with proper thermal printer alignment (exactly 42 chars per line)
+    const nameWithCode = `${deptCode}${name}`;
+    const maxNameLength = 32; // Leave space for price
+    const truncatedName = nameWithCode.length > maxNameLength ? 
+        nameWithCode.substring(0, maxNameLength - 3) + '...' : nameWithCode;
     
-    itemDiv.innerHTML = `
-        <span class="item-name">${itemCode}${name}</span>
-        <span class="item-price">${paddedPrice}</span>
-    `;
+    const priceStr = `$${price.toFixed(2)}`;
+    const totalLength = truncatedName.length + priceStr.length;
+    const spaces = Math.max(1, 42 - totalLength);
+    const spacing = ' '.repeat(spaces);
+    
+    // Use single line format for thermal printer authenticity
+    itemDiv.textContent = `${truncatedName}${spacing}${priceStr}`;
     return itemDiv;
 }
 
@@ -1094,22 +1129,81 @@ function generateFooter(store) {
     const footer = document.createElement('div');
     footer.className = 'receipt-footer';
     
-    const messages = {
-        walmart: 'Thank you for shopping at Walmart!<br>Save your receipt<br>See back for return policy',
-        target: 'Thank you for shopping at Target<br>RedCard saves 5% everyday<br>Return policy at Guest Services',
-        cvs: 'Thank you for shopping at CVS<br>ExtraCare Member<br>Visit CVS.com for exclusive offers',
-        walgreens: 'Thank you for choosing Walgreens<br>Be Well<br>Questions? Call 1-800-WALGREENS',
-        publix: 'Thank you for shopping at Publix<br>Where shopping is a pleasure<br>Visit publix.com',
-        homedepot: 'Thank you for shopping<br>The Home Depot<br>How doers get more done',
-        costco: 'Thank you for shopping at Costco<br>Your member savings add up!<br>Visit Costco.com',
-        costcogas: 'Thank you for fueling at Costco<br>Members save on every gallon<br>Drive safely',
-        samsclub: 'Thank you for shopping<br>Members save more<br>Visit SamsClub.com',
-        'winn-dixie': 'Thank you for shopping local<br>Down home. Down the street.<br>See you again soon',
-        'dollar-general': 'Thank you for shopping smart<br>Save time. Save money.<br>Every day',
-        'circle-k': 'Thank you!<br>Visit us again soon<br>Download the Circle K app'
+    const returnPolicies = {
+        walmart: `Thank you for shopping at Walmart!<br>
+                 RETURN POLICY: Most items 90 days with receipt<br>
+                 Electronics 30 days. No receipt? Store credit only<br>
+                 Customer Service: 1-800-WALMART<br>
+                 For returns visit Customer Service Desk`,
+        
+        target: `Thank you for shopping at Target<br>
+                90-day return policy with receipt<br>
+                RedCard holders get extra 30 days<br>
+                Electronics & entertainment: 30 days<br>
+                Guest Services: 1-800-440-0680`,
+        
+        cvs: `Thank you for shopping at CVS<br>
+             Most items: 60 days with receipt<br>
+             Pharmacy items cannot be returned<br>
+             ExtraCare Member benefits apply<br>
+             Customer Care: 1-800-SHOP-CVS`,
+        
+        walgreens: `Thank you for choosing Walgreens<br>
+                   30-day return policy with receipt<br>
+                   Pharmacy items: No returns<br>
+                   Photo/seasonal items: 14 days<br>
+                   Customer Service: 1-800-WALGREENS`,
+        
+        publix: `Thank you for shopping at Publix<br>
+                Where shopping is a pleasure<br>
+                Full refund with receipt within reasonable time<br>
+                Satisfaction guaranteed or money back<br>
+                Customer Service: 1-800-PUBLIX1`,
+        
+        homedepot: `Thank you for shopping The Home Depot<br>
+                   90-day return policy with receipt<br>
+                   365 days for Pro Xtra members<br>
+                   Special orders: 48 hours to cancel<br>
+                   Customer Care: 1-800-HOME-DEPOT`,
+        
+        costco: `Thank you for shopping at Costco<br>
+                Risk-free 100% satisfaction guarantee<br>
+                Electronics & appliances: 90 days<br>
+                Membership fee refundable anytime<br>
+                Member Services: 1-800-774-2678`,
+        
+        costcogas: `Thank you for fueling at Costco<br>
+                   Gas purchases cannot be returned<br>
+                   Quality guaranteed - report issues immediately<br>
+                   Member Services: 1-800-774-2678<br>
+                   Drive safely`,
+        
+        samsclub: `Thank you for shopping Sam's Club<br>
+                  Satisfaction guaranteed<br>
+                  Most items: No time limit with receipt<br>
+                  Electronics: 90 days from purchase<br>
+                  Member Services: 1-888-746-7726`,
+        
+        'winn-dixie': `Thank you for shopping at Winn-Dixie<br>
+                      7-day return policy with receipt<br>
+                      Satisfaction guarantee on SE Grocers brand<br>
+                      Customer Service: 1-866-946-6349<br>
+                      Down home. Down the street.`,
+        
+        'dollar-general': `Thank you for shopping Dollar General<br>
+                          30-day return policy with receipt<br>
+                          Store credit without receipt<br>
+                          Seasonal items: Within season only<br>
+                          Customer Service: 1-800-678-9258`,
+        
+        'circle-k': `Thank you for shopping Circle K<br>
+                    Food & bevererage sales final<br>
+                    Merchandise: 30 days with receipt<br>
+                    Lottery tickets cannot be returned<br>
+                    Customer Service: 1-855-770-5550`
     };
     
-    footer.innerHTML = messages[store];
+    footer.innerHTML = returnPolicies[store] || 'Thank you for your business!';
     
     // Add barcode
     const barcodeContainer = document.createElement('div');

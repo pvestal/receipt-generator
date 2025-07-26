@@ -521,17 +521,18 @@ button:active {
             rgba(0,0,0,0.03) 2px,
             rgba(0,0,0,0.03) 3px
         );
-    width: 310px;
-    padding: 20px 15px 30px 15px;
+    width: 318px; /* Adjusted for 80mm thermal paper */
+    padding: 18px 12px 28px 12px;
     box-shadow: 
         0 2px 5px rgba(0,0,0,0.1),
         0 0 0 1px rgba(0,0,0,0.05);
-    font-family: 'Courier Prime', 'Courier New', 'Courier', monospace;
-    font-size: 11px;
-    line-height: 1.4;
+    font-family: 'Courier New', 'Consolas', 'Monaco', monospace; /* Thermal printer font */
+    font-size: 10px; /* Smaller for authenticity */
+    line-height: 1.2; /* Tighter line spacing */
     position: relative;
     overflow: hidden;
     color: #1a1a1a;
+    letter-spacing: 0.3px; /* Better character spacing */
     /* Slightly irregular edges */
     clip-path: polygon(
         0 0,
@@ -1284,11 +1285,13 @@ input:checked + .slider:before {
 }
 
 .receipt-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2px;
-    font-size: 11px;
-    letter-spacing: -0.2px;
+    display: block; /* Changed to block for better thermal printer simulation */
+    margin-bottom: 1px;
+    font-size: 10px;
+    letter-spacing: 0px;
+    white-space: pre; /* Preserve spacing for thermal printer alignment */
+    font-family: 'Courier New', 'Consolas', monospace;
+    line-height: 1.1;
 }
 
 .item-name {
@@ -1421,9 +1424,41 @@ input:checked + .slider:before {
     font-style: italic;
 }
 
-/* Subtle ink variations for thermal printer effect */
+/* Enhanced thermal printer ink variations */
 .receipt * {
     filter: contrast(0.95) brightness(0.98);
+}
+
+/* Simulate thermal printer ink density variations */
+.receipt-item:nth-child(3n+1) {
+    opacity: 0.98;
+    filter: contrast(1.02);
+}
+
+.receipt-item:nth-child(5n+2) {
+    opacity: 0.97;
+    filter: contrast(0.98) brightness(1.01);
+}
+
+.receipt-item:nth-child(7n+3) {
+    opacity: 0.99;
+    filter: contrast(1.01) brightness(0.99);
+}
+
+/* Thermal printer heating variations - lighter at edges */
+.receipt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(to bottom, rgba(248,248,246,0.8), transparent);
+    z-index: 10;
+}
+
+.store-info, .receipt-footer {
+    filter: contrast(0.93) brightness(1.02);
 }
 
 /* Transaction details styling */
@@ -1438,7 +1473,7 @@ input:checked + .slider:before {
     letter-spacing: 0.5px;
 }
 
-/* Realistic paper texture overlay */
+/* Enhanced thermal printer paper texture */
 .receipt::after {
     content: '';
     position: absolute;
@@ -1447,14 +1482,29 @@ input:checked + .slider:before {
     right: 0;
     bottom: 0;
     background: 
+        /* Horizontal grain lines for thermal paper */
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 1px,
+            rgba(0,0,0,0.015) 1px,
+            rgba(0,0,0,0.015) 2px
+        ),
+        /* Vertical texture */
         repeating-linear-gradient(
             90deg,
             transparent,
-            transparent 1px,
-            rgba(0,0,0,0.01) 1px,
-            rgba(0,0,0,0.01) 2px
-        );
+            transparent 2px,
+            rgba(0,0,0,0.008) 2px,
+            rgba(0,0,0,0.008) 3px
+        ),
+        /* Random dot pattern for paper grain */
+        radial-gradient(circle at 20% 50%, rgba(0,0,0,0.02) 1px, transparent 1px),
+        radial-gradient(circle at 80% 20%, rgba(0,0,0,0.015) 1px, transparent 1px),
+        radial-gradient(circle at 40% 80%, rgba(0,0,0,0.01) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 15px 15px, 20px 20px, 25px 25px;
     pointer-events: none;
+    z-index: 1;
 }
 
 /* Store-specific text adjustments */
