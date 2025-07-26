@@ -679,234 +679,463 @@ input:checked + .slider:before {
     color: #555;
 }
 
-/* Store logos - Receipt style */
+/* Store logos - Enhanced Receipt style */
 
-/* Walmart */
+/* Base store header styling */
+.store-header {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 3px 0;
+}
+
+.store-logo {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.1;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Walmart - Receipt authentication styling */
 .walmart-header {
     text-align: center;
     margin-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 113, 206, 0.2);
+    padding-bottom: 4px;
 }
 
 .walmart-header .ascii-logo {
     color: #0071CE;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-shadow: 0 0 1px rgba(0, 113, 206, 0.3);
+    font-family: 'Arial Black', 'Arial', sans-serif;
 }
 
 .walmart-tagline {
-    font-size: 9px;
-    margin-top: -2px;
+    font-size: 8px;
+    margin-top: 1px;
     font-family: 'Courier Prime', monospace;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.2px;
     color: #333;
     text-transform: uppercase;
+    font-weight: 600;
 }
 
-/* Target */
+/* Target - Clean retail styling */
 .target-header {
     text-align: center;
     margin-bottom: 8px;
+    background: linear-gradient(to bottom, transparent, rgba(204, 0, 0, 0.05));
+    padding: 2px 0 4px 0;
 }
 
 .target-header .ascii-logo {
     color: #CC0000;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 0 0 1px rgba(204, 0, 0, 0.4);
 }
 
-/* CVS */
+/* CVS - Pharmacy styling with hierarchy */
 .cvs-header {
     text-align: center;
     margin-bottom: 8px;
+    border: 1px solid rgba(204, 0, 0, 0.2);
+    padding: 3px;
+    background: rgba(204, 0, 0, 0.02);
 }
 
 .cvs-header .ascii-logo {
     color: #CC0000;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    font-family: 'Arial', sans-serif;
+    position: relative;
 }
 
-/* Walgreens */
+.cvs-header .ascii-logo::after {
+    content: '/pharmacy';
+    font-size: 10px;
+    font-weight: 600;
+    color: #666;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-top: -2px;
+}
+
+/* Walgreens - Distinctive pharmacy branding */
 .walgreens-header {
     text-align: center;
     margin-bottom: 8px;
+    position: relative;
 }
 
 .walgreens-header .ascii-logo {
     color: #E31837;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 0 1px rgba(227, 24, 55, 0.3);
 }
 
-/* Publix */
+.walgreens-header::before {
+    content: '🏥';
+    font-size: 12px;
+    display: block;
+    margin-bottom: 2px;
+    opacity: 0.6;
+}
+
+/* Publix - Premium grocery styling */
 .publix-header {
     text-align: center;
     margin-bottom: 8px;
+    background: linear-gradient(135deg, rgba(62, 144, 45, 0.03), transparent);
+    padding: 3px 0;
 }
 
 .publix-header .ascii-logo {
     color: #3E902D;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 0 1px rgba(62, 144, 45, 0.4);
 }
 
-/* Home Depot */
+/* Home Depot - Industrial/Construction styling */
 .homedepot-header {
     text-align: center;
     margin-bottom: 8px;
+    background: rgba(249, 99, 2, 0.08);
+    border: 2px solid rgba(249, 99, 2, 0.2);
+    padding: 4px 2px;
 }
 
 .homedepot-header .ascii-logo {
     color: #F96302;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    text-transform: uppercase;
 }
 
-/* Costco */
+/* Costco - Warehouse club styling */
 .costco-header {
     text-align: center;
     margin-bottom: 8px;
+    border: 2px solid rgba(0, 91, 173, 0.3);
+    background: rgba(0, 91, 173, 0.05);
+    padding: 4px;
 }
 
 .costco-header .ascii-logo {
     color: #005BAD;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    text-shadow: 0 0 1px rgba(0, 91, 173, 0.5);
 }
 
-/* Sam's Club */
+/* Sam's Club - Member club styling */
 .sams-header {
     text-align: center;
     margin-bottom: 8px;
+    background: linear-gradient(to right, rgba(0, 103, 160, 0.1), transparent, rgba(0, 103, 160, 0.1));
+    padding: 3px 0;
 }
 
 .sams-header .ascii-logo {
     color: #0067A0;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Winn-Dixie */
+/* Winn-Dixie - Southern grocery styling */
 .winndixie-header {
     text-align: center;
     margin-bottom: 8px;
+    border-bottom: 2px dotted rgba(228, 30, 58, 0.3);
+    padding-bottom: 3px;
 }
 
 .winndixie-header .ascii-logo {
     color: #E41E3A;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    font-family: 'Georgia', serif;
 }
 
-/* Dollar General */
+/* Dollar General - Value store styling */
 .dg-header {
     text-align: center;
     margin-bottom: 8px;
+    background: #1C1B1B;
+    border: 1px solid #333;
+    padding: 4px 6px;
+    border-radius: 2px;
 }
 
 .dg-header .ascii-logo {
     color: #FFF000;
     font-size: 13px;
-    font-weight: bold;
-    background: #1C1B1B;
-    padding: 2px 5px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    text-shadow: 0 0 2px rgba(255, 240, 0, 0.8);
 }
 
-/* Circle K */
+/* Circle K - Convenience store styling */
 .circlek-header {
     text-align: center;
     margin-bottom: 8px;
+    position: relative;
 }
 
 .circlek-header .ascii-logo {
     color: #EC1C24;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-family: 'Arial', sans-serif;
+    position: relative;
 }
 
-/* 7-Eleven */
+.circlek-header .ascii-logo::before {
+    content: '⭕';
+    font-size: 16px;
+    position: absolute;
+    left: -20px;
+    top: -2px;
+    opacity: 0.7;
+}
+
+/* 7-Eleven - Iconic convenience store */
 .seveneleven-header {
     text-align: center;
     margin-bottom: 8px;
+    background: linear-gradient(to right, #FE6601 0%, #FE6601 40%, #016648 40%, #016648 60%, #F1050F 60%, #F1050F 100%);
+    padding: 4px 8px;
+    border-radius: 3px;
 }
 
 .seveneleven-header .ascii-logo {
     color: #FFFFFF;
     font-size: 13px;
-    font-weight: bold;
-    background: linear-gradient(to right, #FE6601 0%, #FE6601 40%, #016648 40%, #016648 60%, #F1050F 60%, #F1050F 100%);
-    padding: 2px 5px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    font-weight: 900;
+    letter-spacing: 1px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
 
-/* ALDI */
+/* ALDI - European discount styling */
 .aldi-header {
     text-align: center;
     margin-bottom: 8px;
+    background: linear-gradient(45deg, #FFC800 0%, #FF7801 25%, #5AC5F0 50%, #D70000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 2px 0;
+    position: relative;
 }
 
 .aldi-header .ascii-logo {
-    color: #00005F;
-    font-size: 13px;
-    font-weight: bold;
-    background: linear-gradient(to right, #FFC800 0%, #FFC800 25%, #FF7801 25%, #FF7801 50%, #5AC5F0 50%, #5AC5F0 75%, #D70000 75%, #D70000 100%);
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    background: linear-gradient(45deg, #FFC800 0%, #FF7801 25%, #5AC5F0 50%, #D70000 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-/* Whole Foods */
+/* Whole Foods - Organic/natural styling */
 .wholefoods-header {
     text-align: center;
     margin-bottom: 8px;
+    background: rgba(0, 103, 75, 0.05);
+    border: 1px solid rgba(0, 103, 75, 0.2);
+    padding: 4px;
+    border-radius: 4px;
 }
 
 .wholefoods-header .ascii-logo {
     color: #00674B;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 0 1px rgba(0, 103, 75, 0.3);
 }
 
-/* Trader Joe's */
+/* Trader Joe's - Quirky neighborhood store */
 .traderjoes-header {
     text-align: center;
     margin-bottom: 8px;
+    background: rgba(210, 18, 66, 0.05);
+    border: 2px dashed rgba(210, 18, 66, 0.3);
+    padding: 3px;
 }
 
 .traderjoes-header .ascii-logo {
     color: #D21242;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-family: 'Georgia', serif;
+    font-style: italic;
 }
 
-/* Kroger */
+/* Kroger - Traditional grocery styling */
 .kroger-header {
     text-align: center;
     margin-bottom: 8px;
+    border-bottom: 3px solid rgba(33, 64, 154, 0.3);
+    padding-bottom: 2px;
 }
 
 .kroger-header .ascii-logo {
     color: #21409A;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 0 0 1px rgba(33, 64, 154, 0.4);
 }
 
-/* Rite Aid */
+/* Rite Aid - Pharmacy chain styling */
 .riteaid-header {
     text-align: center;
     margin-bottom: 8px;
+    background: rgba(0, 61, 166, 0.05);
+    border: 1px solid rgba(0, 61, 166, 0.2);
+    padding: 3px;
 }
 
 .riteaid-header .ascii-logo {
     color: #003DA6;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
 }
 
+.riteaid-header::after {
+    content: 'PHARMACY';
+    display: block;
+    font-size: 8px;
+    color: #666;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 1px;
+}
+
+/* Enhanced store taglines */
 .store-tagline {
     text-align: center;
     font-size: 9px;
     margin-top: 2px;
+    font-family: 'Courier Prime', monospace;
+    opacity: 0.8;
+}
+
+/* Additional thermal printer authenticity */
+.store-header {
+    position: relative;
+}
+
+/* Subtle thermal printer artifacts */
+.store-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.05) 50%, transparent 100%);
+    z-index: -1;
+}
+
+/* Enhanced visual hierarchy for multi-word logos */
+.costco-header .ascii-logo,
+.homedepot-header .ascii-logo,
+.wholefoods-header .ascii-logo {
+    word-spacing: 2px;
+}
+
+/* Gas station specific styling */
+.costcogas-header {
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, rgba(0, 91, 173, 0.1), rgba(255, 165, 0, 0.1));
+    border: 1px solid rgba(0, 91, 173, 0.3);
+    padding: 4px;
+}
+
+.costcogas-header .ascii-logo {
+    color: #005BAD;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+}
+
+.costcogas-header::after {
+    content: '⛽ GASOLINE ⛽';
+    display: block;
+    font-size: 8px;
+    color: #FF6600;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Monochrome mode overrides for better print compatibility */
+.receipt.monochrome .walmart-header .ascii-logo,
+.receipt.monochrome .target-header .ascii-logo,
+.receipt.monochrome .cvs-header .ascii-logo,
+.receipt.monochrome .walgreens-header .ascii-logo,
+.receipt.monochrome .publix-header .ascii-logo,
+.receipt.monochrome .homedepot-header .ascii-logo,
+.receipt.monochrome .costco-header .ascii-logo,
+.receipt.monochrome .sams-header .ascii-logo,
+.receipt.monochrome .winndixie-header .ascii-logo,
+.receipt.monochrome .dg-header .ascii-logo,
+.receipt.monochrome .circlek-header .ascii-logo,
+.receipt.monochrome .seveneleven-header .ascii-logo,
+.receipt.monochrome .aldi-header .ascii-logo,
+.receipt.monochrome .wholefoods-header .ascii-logo,
+.receipt.monochrome .traderjoes-header .ascii-logo,
+.receipt.monochrome .kroger-header .ascii-logo,
+.receipt.monochrome .riteaid-header .ascii-logo {
+    color: #000 !important;
+    text-shadow: none !important;
+    background: none !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+.receipt.monochrome .dg-header,
+.receipt.monochrome .seveneleven-header {
+    background: #f0f0f0 !important;
+    border-color: #000 !important;
+}
+
+.receipt.monochrome .dg-header .ascii-logo,
+.receipt.monochrome .seveneleven-header .ascii-logo {
+    color: #000 !important;
 }
 
 /* Base receipt styles with store-specific paper tints */
