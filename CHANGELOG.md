@@ -1,5 +1,31 @@
 # Receipt Generator Changelog
 
+## Version 2.1.0 (2025-07-26)
+
+### Date & Time Improvements
+- Receipt dates now randomly generate within last 14 days (previously any date)
+- Receipt times now between 7 AM and 9 PM for realism
+- Multiple receipt generation also follows 14-day rule
+
+### Address Updates
+- Fixed all "NEAREST" placeholder addresses to use actual store locations
+- Kroger: 3280 Dauphin St, Mobile, AL 36606
+- Whole Foods: 3420 Veterans Blvd, Metairie, LA 70002
+- Trader Joe's: 1489 Market St, Tallahassee, FL 32312
+- Rite Aid: 852 Downtowner Loop W, Mobile, AL 36609
+
+### Barcode Enhancements
+- Complete overhaul of barcode patterns for each store chain
+- Added store-specific prefixes (HD, PUB, WFM, TJ, KR, RA, etc.)
+- Enhanced formats matching real receipts:
+  - Walmart: TC# format with full timestamp
+  - Target: Receipt ID format SSSS-RRRR-TTTTTT-MMDD
+  - CVS/Walgreens: Store-Date-Transaction with full year
+  - Costco: Space-separated date components
+  - Sam's Club: SC prefix with date/time
+  - Dollar General: DG prefix format
+  - And unique formats for all other stores
+
 ## Version 2.0.0 (2025-07-24)
 
 ### Major Features
