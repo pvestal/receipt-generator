@@ -353,7 +353,7 @@ const storeConfigs = {
         name: 'Kroger',
         logo: 'KROGER',
         tagline: 'Fresh for Everyone',
-        address: ['NEAREST: Mobile, AL', '3280 Dauphin St', '(251) 473-1012'],
+        address: ['3280 Dauphin St', 'Mobile, AL 36606', '(251) 473-1012'],
         storeNumber: '0389',
         items: [
             { name: 'KROGER MILK GAL', price: 3.29 },
@@ -440,7 +440,7 @@ const storeConfigs = {
         name: 'Whole Foods',
         logo: 'WHOLE FOODS MARKET',
         tagline: 'Americas Healthiest Grocery Store',
-        address: ['NEAREST: New Orleans', '3420 Veterans Blvd', '(504) 888-8225'],
+        address: ['3420 Veterans Blvd', 'Metairie, LA 70002', '(504) 888-8225'],
         storeNumber: '10342',
         items: [
             { name: '365 ORGANIC MILK', price: 5.99 },
@@ -469,7 +469,7 @@ const storeConfigs = {
         name: "Trader Joe's",
         logo: "TRADER JOE'S",
         tagline: null,
-        address: ['NEAREST: Tallahassee', '1489 Market St', '(850) 656-5602'],
+        address: ['1489 Market St', 'Tallahassee, FL 32312', '(850) 656-5602'],
         storeNumber: '735',
         items: [
             { name: 'MANDARIN CHKN', price: 4.99 },
@@ -498,7 +498,7 @@ const storeConfigs = {
         name: 'Rite Aid',
         logo: 'RITE AID',
         tagline: 'With us, its personal',
-        address: ['NEAREST: Mobile, AL', '852 Downtowner Loop W', '(251) 479-1351'],
+        address: ['852 Downtowner Loop W', 'Mobile, AL 36609', '(251) 479-1351'],
         storeNumber: '4821',
         items: [
             { name: 'RITE AID ASPIRIN', price: 5.99 },
@@ -538,9 +538,19 @@ document.addEventListener('DOMContentLoaded', function() {
         versionElement.textContent = `v${APP_VERSION}`;
     }
     
+    // Generate random date within last 14 days
     const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    document.getElementById('receipt-date').value = now.toISOString().slice(0, 16);
+    const daysAgo = Math.floor(Math.random() * 14); // 0-13 days ago
+    const randomDate = new Date(now);
+    randomDate.setDate(randomDate.getDate() - daysAgo);
+    
+    // Random time between 7 AM and 10 PM
+    const randomHour = Math.floor(Math.random() * 15) + 7; // 7-21 (7 AM - 9 PM)
+    const randomMinute = Math.floor(Math.random() * 60);
+    randomDate.setHours(randomHour, randomMinute, Math.floor(Math.random() * 60));
+    
+    randomDate.setMinutes(randomDate.getMinutes() - randomDate.getTimezoneOffset());
+    document.getElementById('receipt-date').value = randomDate.toISOString().slice(0, 16);
     
     // Initialize receipt counter
     initializeCounter();
@@ -1179,45 +1189,76 @@ function generateBarcodeData(store) {
     const reg = Math.floor(Math.random() * 30) + 1;
     
     if (store === 'walmart') {
-        // Walmart uses Code 128 with format: SSSSRRTTTTTTMMDDYY
+        // Walmart uses TC# (Transaction Code) format: TC# followed by 20 digits
+        // Format: SSSSRRTTTTTTTMMDDYYHHMM
         const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}${date.getFullYear().toString().substr(-2)}`;
-        return `${storeNum}${reg.toString().padStart(2, '0')}${trans.toString().padStart(6, '0')}${dateStr}`;
+        const timeStr = `${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}`;
+        return `${storeNum}${reg.toString().padStart(2, '0')}${trans.toString().padStart(7, '0')}${dateStr}${timeStr}`;
     } else if (store === 'target') {
-        // Target uses DPCI (Department-Class-Item) format: DDD-CC-IIII
-        const dept = Math.floor(Math.random() * 900) + 100;
-        const cls = Math.floor(Math.random() * 90) + 10;
-        const item = Math.floor(Math.random() * 9000) + 1000;
-        return `${dept}-${cls}-${item}`;
+        // Target uses receipt ID with format: SSSS-RRRR-TTTTTT-MMDD
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        const regStr = (reg + 1000).toString();
+        return `${storeNum}-${regStr}-${trans.toString().padStart(6, '0')}-${dateStr}`;
     } else if (store === 'cvs') {
-        // CVS uses format: SSSSS YYMMDD TTTTT
-        const dateStr = `${date.getFullYear().toString().substr(-2)}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
-        return `${storeNum} ${dateStr} ${trans.toString().padStart(5, '0')}`;
+        // CVS uses format: Store-Date-Trans with full year
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `${storeNum}-${dateStr}-${trans.toString().padStart(6, '0')}`;
     } else if (store === 'walgreens') {
-        // Walgreens format: WALSSSSSTTTTTTT
-        return `WAL${storeNum}${trans.toString().padStart(7, '0')}`;
+        // Walgreens format: SSSSS-YYYYMMDD-TTTTTT
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `${storeNum}-${dateStr}-${trans.toString().padStart(6, '0')}`;
     } else if (store === 'publix') {
-        // Publix format: SSSS RR TTTTTT MMDD
-        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
-        return `${storeNum} ${reg.toString().padStart(2, '0')} ${trans.toString().padStart(6, '0')} ${dateStr}`;
+        // Publix format: PUB SSSS TTTTTT YYYYMMDD
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `PUB ${storeNum} ${trans.toString().padStart(6, '0')} ${dateStr}`;
     } else if (store === 'homedepot') {
-        // Home Depot format: SSSS RRR TTTTTTT
-        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(7, '0')}`;
+        // Home Depot format: HD SSSS RRR TTTTTTTT
+        return `HD ${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(8, '0')}`;
     } else if (store === 'costco' || store === 'costcogas') {
-        // Costco format: SSSS RRR TTTTTTTT
-        return `${storeNum} ${reg.toString().padStart(3, '0')} ${trans.toString().padStart(8, '0')}`;
+        // Costco format: SSSS YYYY MM DD TTTTTTTT
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${storeNum} ${year} ${month} ${day} ${trans.toString().padStart(8, '0')}`;
     } else if (store === 'samsclub') {
-        // Sam's Club format: SSSS TTTTTTTT MMDD
-        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
-        return `${storeNum} ${trans.toString().padStart(8, '0')} ${dateStr}`;
+        // Sam's Club format: SC SSSS YYYYMMDD TTTTTTTT
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `SC ${storeNum} ${dateStr} ${trans.toString().padStart(8, '0')}`;
     } else if (store === 'winn-dixie') {
-        // Winn-Dixie format: SSS-RR-TTTTT
-        return `${storeNum.substr(-3)}-${reg.toString().padStart(2, '0')}-${trans.toString().padStart(5, '0')}`;
+        // Winn-Dixie format: WD-SSS-MMDD-TTTTT
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `WD-${storeNum.substr(-3)}-${dateStr}-${trans.toString().padStart(5, '0')}`;
     } else if (store === 'dollar-general') {
-        // Dollar General format: SSSSS TTTTTT
-        return `${storeNum} ${trans.toString().padStart(6, '0')}`;
+        // Dollar General format: DG SSSSS MMDDYY TTTTTT
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}${date.getFullYear().toString().substr(-2)}`;
+        return `DG ${storeNum} ${dateStr} ${trans.toString().padStart(6, '0')}`;
     } else if (store === 'circle-k') {
-        // Circle K format: SSSSSSS TTTTTT
-        return `${storeNum} ${trans.toString().padStart(6, '0')}`;
+        // Circle K format: CK SSSSSSS TTTTTT HHMM
+        const timeStr = `${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}`;
+        return `CK ${storeNum} ${trans.toString().padStart(6, '0')} ${timeStr}`;
+    } else if (store === 'sevenelevn') {
+        // 7-Eleven format: 7E SSSSS YYYYMMDD TTTTTT
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `7E ${storeNum} ${dateStr} ${trans.toString().padStart(6, '0')}`;
+    } else if (store === 'aldi') {
+        // ALDI format: ALDI SSSS TTTTTTTT
+        return `ALDI ${storeNum} ${trans.toString().padStart(8, '0')}`;
+    } else if (store === 'wholefds') {
+        // Whole Foods format: WFM SSSSS YYYYMMDD TTTTTTT
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `WFM ${storeNum} ${dateStr} ${trans.toString().padStart(7, '0')}`;
+    } else if (store === 'traderjoes') {
+        // Trader Joe's format: TJ SSS MMDDYY TTTTTT
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}${date.getFullYear().toString().substr(-2)}`;
+        return `TJ ${storeNum.substr(-3)} ${dateStr} ${trans.toString().padStart(6, '0')}`;
+    } else if (store === 'kroger') {
+        // Kroger format: KR SSSS TTTTTTTT MMDD
+        const dateStr = `${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `KR ${storeNum} ${trans.toString().padStart(8, '0')} ${dateStr}`;
+    } else if (store === 'riteaid') {
+        // Rite Aid format: RA SSSS YYYYMMDD TTTTT
+        const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+        return `RA ${storeNum} ${dateStr} ${trans.toString().padStart(5, '0')}`;
     } else {
         // Default format
         return `${storeNum} ${trans.toString().padStart(8, '0')}`;
@@ -1275,11 +1316,13 @@ function generateMultipleReceipts() {
         const randomItemCount = Math.floor(Math.random() * 15) + 3;
         const randomMaxPrice = Math.floor(Math.random() * 100) + 10;
         
-        // Generate a new date for variety
+        // Generate a new date within last 14 days
         const randomDate = new Date();
-        randomDate.setDate(randomDate.getDate() - Math.floor(Math.random() * 30));
-        randomDate.setHours(Math.floor(Math.random() * 12) + 8);
-        randomDate.setMinutes(Math.floor(Math.random() * 60));
+        const daysAgo = Math.floor(Math.random() * 14); // 0-13 days ago
+        randomDate.setDate(randomDate.getDate() - daysAgo);
+        const randomHour = Math.floor(Math.random() * 15) + 7; // 7 AM - 9 PM
+        const randomMinute = Math.floor(Math.random() * 60);
+        randomDate.setHours(randomHour, randomMinute, Math.floor(Math.random() * 60));
         
         // Store receipt info for later
         receipts.push({ div: receiptDiv, store: selectedStore, itemCount: randomItemCount, maxPrice: randomMaxPrice, date: randomDate });
